@@ -40,90 +40,90 @@ namespace OpenTKCubo3D
 //hola
 
 // Columna derecha (frontal)
-0.5f, -0.5f,  0.5f,  1.0f, 0.647f, 0.0f,  // Inferior derecha
-0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 1.0f,  // Superior derecha
+0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  // Inferior derecha
+0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  // Superior derecha
 
 // Base (frontal)
 -0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  // Izquierda
-0.5f, -0.5f,  0.5f,  1.0f, 0.647f, 0.0f,  // Derecha
+0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  // Derecha
 
 // Columna izquierda (trasera)
 -0.5f, -0.5f,  0.2f,  1.0f, 0.0f, 0.0f,  // Inferior izquierda
--0.5f,  0.5f,  0.2f,  0.0f, 1.0f, 0.0f,  // Superior izquierda
+-0.5f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,  // Superior izquierda
 
 // Columna derecha (trasera)
-0.5f, -0.5f,  0.2f,  1.0f, 0.647f, 0.0f,  // Inferior derecha
-0.5f,  0.5f,  0.2f,  0.0f, 0.0f, 1.0f,  // Superior derecha
+0.5f, -0.5f,  0.2f,  1.0f, 0.0f, 0.0f,  // Inferior derecha
+0.5f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,  // Superior derecha
 
 // Base (trasera)
 -0.5f, -0.5f, 0.2f,  1.0f, 0.0f, 0.0f,  // Izquierda
-0.5f, -0.5f,  0.2f,  1.0f, 0.647f, 0.0f,  // Derecha
+0.5f, -0.5f,  0.2f,  1.0f, 0.0f, 0.0f,  // Derecha
 
 // Conexiones entre frente y atrás
 -0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  
 -0.5f, -0.5f,  0.2f,  1.0f, 0.0f, 0.0f,  
 
-0.5f, -0.5f,  0.5f,  1.0f, 0.647f, 0.0f,  
-0.5f, -0.5f,  0.2f,  1.0f, 0.647f, 0.0f,  
+0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  
+0.5f, -0.5f,  0.2f,  1.0f, 0.0f, 0.0f,  
 
--0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 0.0f,  
--0.5f,  0.5f,  0.2f,  0.0f, 1.0f, 0.0f,  
+-0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  
+-0.5f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,  
 
-0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 1.0f,  
-0.5f,  0.5f,  0.2f,  0.0f, 0.0f, 1.0f,  
+0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  
+0.5f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,  
 
 
 //segundo 
 
 // Columna izquierda (frontal)
 -0.3f, -0.3f,  0.5f,  1.0f, 0.0f, 0.0f,  // Inferior izquierda
--0.3f,  0.5f,  0.5f,  0.0f, 1.0f, 0.0f,  // Superior izquierda
+-0.3f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  // Superior izquierda
 
 // Columna derecha (frontal)
- 0.3f, -0.3f,  0.5f,  1.0f, 0.647f, 0.0f,  // Inferior derecha
- 0.3f,  0.5f,  0.5f,  0.0f, 0.0f, 1.0f,  // Superior derecha
+ 0.3f, -0.3f,  0.5f,  1.0f, 0.0f, 0.0f,  // Inferior derecha
+ 0.3f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  // Superior derecha
 
 // Base (frontal)
 -0.3f, -0.3f,  0.5f,  1.0f, 0.0f, 0.0f,  // Izquierda
- 0.3f, -0.3f,  0.5f,  1.0f, 0.647f, 0.0f,  // Derecha
+ 0.3f, -0.3f,  0.5f,  1.0f, 0.0f, 0.0f,  // Derecha
 
 // Columna izquierda (trasera)
 -0.3f, -0.3f, 0.2f,  1.0f, 0.0f, 0.0f,  // Inferior izquierda
--0.3f,  0.5f, 0.2f,  0.0f, 1.0f, 0.0f,  // Superior izquierda
+-0.3f,  0.5f, 0.2f, 1.0f, 0.0f, 0.0f,  // Superior izquierda
 
 // Columna derecha (trasera)
- 0.3f, -0.3f, 0.2f,  1.0f, 0.647f, 0.0f,  // Inferior derecha
- 0.3f,  0.5f, 0.2f,  0.0f, 0.0f, 1.0f,  // Superior derecha
+ 0.3f, -0.3f, 0.2f,  1.0f, 0.0f, 0.0f,  // Inferior derecha
+ 0.3f,  0.5f, 0.2f,  1.0f, 0.0f, 0.0f,  // Superior derecha
 
 // Base (trasera)
 -0.3f, -0.3f, 0.2f,  1.0f, 0.0f, 0.0f,  // Izquierda
- 0.3f, -0.3f, 0.2f,  1.0f, 0.647f, 0.0f,  // Derecha
+ 0.3f, -0.3f, 0.2f,  1.0f, 0.0f, 0.0f,  // Derecha
 
 // Conexiones entre frente y atrás
 -0.3f, -0.3f,  0.5f,  1.0f, 0.0f, 0.0f,  
 -0.3f, -0.3f,  0.2f,  1.0f, 0.0f, 0.0f,  
 
- 0.3f, -0.3f,  0.5f,  1.0f, 0.647f, 0.0f,  
- 0.3f, -0.3f,  0.2f,  1.0f, 0.647f, 0.0f,  
+ 0.3f, -0.3f,  0.5f,  1.0f, 0.0f, 0.0f,  
+ 0.3f, -0.3f,  0.2f,  1.0f, 0.0f, 0.0f,  
 
--0.3f,  0.5f,  0.5f,  0.0f, 1.0f, 0.0f,  
--0.3f,  0.5f,  0.2f,  0.0f, 1.0f, 0.0f,  
+-0.3f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  
+-0.3f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,  
 
- 0.3f,  0.5f,  0.5f,  0.0f, 0.0f, 1.0f,  
- 0.3f,  0.5f,  0.2f,  0.0f, 0.0f, 1.0f, 
+ 0.3f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  
+ 0.3f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f, 
 
 // Conexion entre los dos flujos
--0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 0.0f,  // Columna Superior izquierda
--0.3f,  0.5f,  0.5f,  0.0f, 1.0f, 0.0f,  // s2 Columna Superior izquierda
+-0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  // Columna Superior izquierda
+-0.3f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  // s2 Columna Superior izquierda
 
--0.5f,  0.5f,  0.2f,  0.0f, 1.0f, 0.0f,  // trasera Superior izquierda
--0.3f,  0.5f, 0.2f,  0.0f, 1.0f, 0.0f,  // s2 atrasera Superior izquierda
+-0.5f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,  // trasera Superior izquierda
+-0.3f,  0.5f, 0.2f,  1.0f, 0.0f, 0.0f,  // s2 atrasera Superior izquierda
 
-0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 1.0f,  // Columna Superior derecha
-0.3f,  0.5f,  0.5f,  0.0f, 0.0f, 1.0f,  // s2 Columna Superior derecha
+0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  // Columna Superior derecha
+0.3f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  // s2 Columna Superior derecha
 
-0.5f,  0.5f,  0.2f,  0.0f, 0.0f, 1.0f,  // trasera Superior derecha
- 0.3f,  0.5f, 0.2f,  0.0f, 0.0f, 1.0f,  // s2 trasera Superior derecha
+0.5f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,  // trasera Superior derecha
+ 0.3f,  0.5f, 0.2f,  1.0f, 0.0f, 0.0f,  // s2 trasera Superior derecha
 
 };
 
