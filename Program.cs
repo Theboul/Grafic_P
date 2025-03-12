@@ -37,7 +37,6 @@ namespace OpenTKCubo3D
 -0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  // Inferior izquierda
 -0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  // Superior izquierda
 
-//hola
 
 // Columna derecha (frontal)
 0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  // Inferior derecha
