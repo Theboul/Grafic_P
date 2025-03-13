@@ -29,3 +29,4 @@ C:\Users\Usuario\Grafic_Figura\obj\Debug\net9.0\refint\Grafic_Figura.dll
 C:\Users\Usuario\Grafic_Figura\obj\Debug\net9.0\Grafic_Figura.pdb
 C:\Users\Usuario\Grafic_Figura\obj\Debug\net9.0\Grafic_Figura.genruntimeconfig.cache
 C:\Users\Usuario\Grafic_Figura\obj\Debug\net9.0\ref\Grafic_Figura.dll
+C:\Users\Usuario\Grafic_Figura\obj\Debug\net9.0\Grafic_Figura.sourcelink.json
