@@ -31,100 +31,70 @@ namespace OpenTKCubo3D
             GL.ClearColor(0.1f, 0.1f, 0.1f, 0.1f);
             GL.Enable(EnableCap.DepthTest);
 
-            // Configurar los vértices del cubo
+            // Configurar los vértices Frontales Figura U
             float[] vertices = {
-// Columna izquierda (frontal)
--0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  // Inferior izquierda
--0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  // Superior izquierda
+            // Columnas  
+           -0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 1 Inferior Izquierda frontal
+           -0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 2 Superior Izquierda frontal
+            0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 3 Inferior Derecha fontal
+            0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 4 Superior Derecha frontal
+           -0.5f, -0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 5 Inferior izquierda trasera
+           -0.5f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 6 Superior izquierda trasera
+            0.5f, -0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 7 Inferior derecha trasera
+            0.5f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 8 Superior derecha trasera
 
+            // segundas Columnas
+           -0.3f, -0.3f,  0.5f,  1.0f, 0.0f, 0.0f,   // 9 Inferior izquierda frontal
+           -0.3f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 10 Superior izquierda frontal
+            0.3f, -0.3f,  0.5f,  1.0f, 0.0f, 0.0f,   // 11 Inferior derecha frontal
+            0.3f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 12 Superior derecha frontal
+           -0.3f, -0.3f,  0.2f,  1.0f, 0.0f, 0.0f,   // 13 Inferior izquierda traseras
+           -0.3f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 14 Superior izquierda traseras
+            0.3f, -0.3f,  0.2f,  1.0f, 0.0f, 0.0f,   // 15 Inferior derecha traseras
+            0.3f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 16 Superior derecha traseras
+            
+            // Base 
+           -0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 17 Izquierda frontal
+            0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 18 Derecha frontal
+           -0.5f, -0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 19 Izquierda trasera
+            0.5f, -0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 20 Derecha trasera
 
-// Columna derecha (frontal)
-0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  // Inferior derecha
-0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  // Superior derecha
+            // segunda Base 
+           -0.3f, -0.3f,  0.5f,  1.0f, 0.0f, 0.0f,   // 21 Izquierda frontal
+            0.3f, -0.3f,  0.5f,  1.0f, 0.0f, 0.0f,   // 22 Derecha frontal
+           -0.3f, -0.3f,  0.2f,  1.0f, 0.0f, 0.0f,   // 23 Izquierda trasera
+            0.3f, -0.3f,  0.2f,  1.0f, 0.0f, 0.0f,   // 24 Derecha trasera
+            
+            // Conexiones entre Columnas
+           -0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 2 a
+           -0.3f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 10
+           -0.5f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 6 a
+           -0.3f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 14
+            0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 4 a
+            0.3f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 12
+            0.5f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 8 a
+            0.3f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 16 
 
-// Base (frontal)
--0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  // Izquierda
-0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  // Derecha
+            // Conexiones entre frente y atrás
+           -0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 2 a
+           -0.5f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 6
+            0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 4 a
+            0.5f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 8
+           -0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 17 a
+           -0.5f, -0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 19
+            0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 18 a
+            0.5f, -0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 20
 
-// Columna izquierda (trasera)
--0.5f, -0.5f,  0.2f,  1.0f, 0.0f, 0.0f,  // Inferior izquierda
--0.5f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,  // Superior izquierda
-
-// Columna derecha (trasera)
-0.5f, -0.5f,  0.2f,  1.0f, 0.0f, 0.0f,  // Inferior derecha
-0.5f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,  // Superior derecha
-
-// Base (trasera)
--0.5f, -0.5f, 0.2f,  1.0f, 0.0f, 0.0f,  // Izquierda
-0.5f, -0.5f,  0.2f,  1.0f, 0.0f, 0.0f,  // Derecha
-
-// Conexiones entre frente y atrás
--0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  
--0.5f, -0.5f,  0.2f,  1.0f, 0.0f, 0.0f,  
-
-0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  
-0.5f, -0.5f,  0.2f,  1.0f, 0.0f, 0.0f,  
-
--0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  
--0.5f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,  
-
-0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  
-0.5f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,  
-
-
-//segundo 
-
-// Columna izquierda (frontal)
--0.3f, -0.3f,  0.5f,  1.0f, 0.0f, 0.0f,  // Inferior izquierda
--0.3f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  // Superior izquierda
-
-// Columna derecha (frontal)
- 0.3f, -0.3f,  0.5f,  1.0f, 0.0f, 0.0f,  // Inferior derecha
- 0.3f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  // Superior derecha
-
-// Base (frontal)
--0.3f, -0.3f,  0.5f,  1.0f, 0.0f, 0.0f,  // Izquierda
- 0.3f, -0.3f,  0.5f,  1.0f, 0.0f, 0.0f,  // Derecha
-
-// Columna izquierda (trasera)
--0.3f, -0.3f, 0.2f,  1.0f, 0.0f, 0.0f,  // Inferior izquierda
--0.3f,  0.5f, 0.2f, 1.0f, 0.0f, 0.0f,  // Superior izquierda
-
-// Columna derecha (trasera)
- 0.3f, -0.3f, 0.2f,  1.0f, 0.0f, 0.0f,  // Inferior derecha
- 0.3f,  0.5f, 0.2f,  1.0f, 0.0f, 0.0f,  // Superior derecha
-
-// Base (trasera)
--0.3f, -0.3f, 0.2f,  1.0f, 0.0f, 0.0f,  // Izquierda
- 0.3f, -0.3f, 0.2f,  1.0f, 0.0f, 0.0f,  // Derecha
-
-// Conexiones entre frente y atrás
--0.3f, -0.3f,  0.5f,  1.0f, 0.0f, 0.0f,  
--0.3f, -0.3f,  0.2f,  1.0f, 0.0f, 0.0f,  
-
- 0.3f, -0.3f,  0.5f,  1.0f, 0.0f, 0.0f,  
- 0.3f, -0.3f,  0.2f,  1.0f, 0.0f, 0.0f,  
-
--0.3f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  
--0.3f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,  
-
- 0.3f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  
- 0.3f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f, 
-
-// Conexion entre los dos flujos
--0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  // Columna Superior izquierda
--0.3f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  // s2 Columna Superior izquierda
-
--0.5f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,  // trasera Superior izquierda
--0.3f,  0.5f, 0.2f,  1.0f, 0.0f, 0.0f,  // s2 atrasera Superior izquierda
-
-0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  // Columna Superior derecha
-0.3f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  // s2 Columna Superior derecha
-
-0.5f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,  // trasera Superior derecha
- 0.3f,  0.5f, 0.2f,  1.0f, 0.0f, 0.0f,  // s2 trasera Superior derecha
-
-};
+            // Conexiones entre frente y atrás (dentro de la figura)
+           -0.3f, -0.3f,  0.5f,  1.0f, 0.0f, 0.0f,   // 9 a
+           -0.3f, -0.3f,  0.2f,  1.0f, 0.0f, 0.0f,   // 13
+            0.3f, -0.3f,  0.5f,  1.0f, 0.0f, 0.0f,   // 11 a
+            0.3f, -0.3f,  0.2f,  1.0f, 0.0f, 0.0f,   // 15
+           -0.3f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 10 a
+           -0.3f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 14
+            0.3f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 12 a
+            0.3f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 16
+            };
 
             // Crear y enlazar el VAO
             _vertexArrayObject = GL.GenVertexArray();
@@ -254,7 +224,7 @@ namespace OpenTKCubo3D
             var nativeWindowSettings = new NativeWindowSettings()
             {
                 ClientSize = new Vector2i(800, 600),
-                Title = "Cubo 3D con OpenTK y Shaders",
+                Title = "Figura U 3D",
                 Flags = ContextFlags.Default,
                 Profile = ContextProfile.Core,
             };
