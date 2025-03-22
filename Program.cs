@@ -120,8 +120,7 @@ namespace OpenTKCubo3D
             0,4,  1,5,  9,13,  8,12,  10,14, 11,15,  3,7,  2,6  
             
             };
-
-            
+  
             _vertexArrayObject = GL.GenVertexArray();
             GL.BindVertexArray(_vertexArrayObject);
 
