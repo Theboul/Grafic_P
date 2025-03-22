@@ -1,7 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-//Console.WriteLine("Hello, World!");
-
-
+// Figura 3D
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
@@ -12,13 +9,21 @@ namespace OpenTKCubo3D
 {
     class Program : GameWindow
     {
-        private float _angleY; // Ángulo de rotación en el eje Y (izquierda/derecha)
-        private float _angleX; // Ángulo de rotación en el eje X (arriba/abajo)
+        private float _angleY; 
+        private float _angleX; 
         private int _vertexBufferObject;
+         private int _elementBufferObject;
         private int _vertexArrayObject;
         private int _shaderProgram;
         private Matrix4 _view;
         private Matrix4 _projection;
+        private int _ejesVertexArrayObject;
+        private int _ejesVertexBufferObject;
+        private int _ejesElementBufferObject;
+        private float _figureX = -1.0f;
+        private float _figureY = -1.0f;
+        private float _figureZ = 0.5f;
+
 
         public Program(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings)
             : base(gameWindowSettings, nativeWindowSettings)
@@ -31,88 +36,109 @@ namespace OpenTKCubo3D
             GL.ClearColor(0.1f, 0.1f, 0.1f, 0.1f);
             GL.Enable(EnableCap.DepthTest);
 
+            //ejes X, Y, Z
+            float[] ejesVertices = {
+            // Eje X (Rojo)
+           -2.0f,  0.0f,  0.0f,  1.0f, 0.0f, 0.0f, // Inicio (negativo)
+            2.0f,  0.0f,  0.0f,  1.0f, 0.0f, 0.0f, // Fin (positivo)
+
+            // Eje Y (Verde)
+            0.0f, -2.0f,  0.0f,  0.0f, 1.0f, 0.0f, // Inicio (negativo)
+            0.0f,  2.0f,  0.0f,  0.0f, 1.0f, 0.0f, // Fin (positivo)
+
+            // Eje Z (Azul)
+            0.0f,  0.0f, -2.0f,  0.0f, 0.0f, 1.0f, // Inicio (negativo)
+            0.0f,  0.0f,  2.0f,  0.0f, 0.0f, 1.0f  // Fin (positivo)
+            };
+
+            uint[] ejesIndices = {
+            0, 1, // Eje X
+            2, 3, // Eje Y
+            4, 5  // Eje Z
+            };
+
+         _ejesVertexArrayObject = GL.GenVertexArray();
+         GL.BindVertexArray(_ejesVertexArrayObject);
+
+         _ejesVertexBufferObject = GL.GenBuffer();
+         GL.BindBuffer(BufferTarget.ArrayBuffer, _ejesVertexBufferObject);
+         GL.BufferData(BufferTarget.ArrayBuffer, ejesVertices.Length * sizeof(float), ejesVertices, BufferUsageHint.StaticDraw);
+
+         _ejesElementBufferObject = GL.GenBuffer();
+         GL.BindBuffer(BufferTarget.ElementArrayBuffer, _ejesElementBufferObject);
+         GL.BufferData(BufferTarget.ElementArrayBuffer, ejesIndices.Length * sizeof(uint), ejesIndices, BufferUsageHint.StaticDraw);
+
+         GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 0);
+         GL.EnableVertexAttribArray(0);
+
+         GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 3 * sizeof(float));
+         GL.EnableVertexAttribArray(1);
+
+
             // Configurar los vértices Frontales Figura U
             float[] vertices = {
             // Columnas  
-           -0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 1 Inferior Izquierda frontal
-           -0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 2 Superior Izquierda frontal
-            0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 3 Inferior Derecha fontal
-            0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 4 Superior Derecha frontal
-           -0.5f, -0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 5 Inferior izquierda trasera
-           -0.5f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 6 Superior izquierda trasera
-            0.5f, -0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 7 Inferior derecha trasera
-            0.5f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 8 Superior derecha trasera
+           -0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 1.0f,   // 1 Inferior Izquierda frontal
+           -0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 1.0f,   // 2 Superior Izquierda frontal
+            0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 1.0f,   // 3 Inferior Derecha fontal
+            0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 1.0f,   // 4 Superior Derecha frontal
+           -0.5f, -0.5f,  0.2f,  1.0f, 0.0f, 1.0f,   // 5 Inferior izquierda trasera
+           -0.5f,  0.5f,  0.2f,  1.0f, 0.0f, 1.0f,   // 6 Superior izquierda trasera
+            0.5f, -0.5f,  0.2f,  1.0f, 0.0f, 1.0f,   // 7 Inferior derecha trasera
+            0.5f,  0.5f,  0.2f,  1.0f, 0.0f, 1.0f,   // 8 Superior derecha trasera
 
             // segundas Columnas
-           -0.3f, -0.3f,  0.5f,  1.0f, 0.0f, 0.0f,   // 9 Inferior izquierda frontal
-           -0.3f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 10 Superior izquierda frontal
-            0.3f, -0.3f,  0.5f,  1.0f, 0.0f, 0.0f,   // 11 Inferior derecha frontal
-            0.3f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 12 Superior derecha frontal
-           -0.3f, -0.3f,  0.2f,  1.0f, 0.0f, 0.0f,   // 13 Inferior izquierda traseras
-           -0.3f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 14 Superior izquierda traseras
-            0.3f, -0.3f,  0.2f,  1.0f, 0.0f, 0.0f,   // 15 Inferior derecha traseras
-            0.3f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 16 Superior derecha traseras
+           -0.3f, -0.3f,  0.5f,  1.0f, 0.0f, 1.0f,   // 9 Inferior izquierda frontal
+           -0.3f,  0.5f,  0.5f,  1.0f, 0.0f, 1.0f,   // 10 Superior izquierda frontal
+            0.3f, -0.3f,  0.5f,  1.0f, 0.0f, 1.0f,   // 11 Inferior derecha frontal
+            0.3f,  0.5f,  0.5f,  1.0f, 0.0f, 1.0f,   // 12 Superior derecha frontal
+           -0.3f, -0.3f,  0.2f,  1.0f, 0.0f, 1.0f,   // 13 Inferior izquierda traseras
+           -0.3f,  0.5f,  0.2f,  1.0f, 0.0f, 1.0f,   // 14 Superior izquierda traseras
+            0.3f, -0.3f,  0.2f,  1.0f, 0.0f, 1.0f,   // 15 Inferior derecha traseras
+            0.3f,  0.5f,  0.2f,  1.0f, 0.0f, 1.0f,   // 16 Superior derecha traseras
             
             // Base 
-           -0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 17 Izquierda frontal
-            0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 18 Derecha frontal
-           -0.5f, -0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 19 Izquierda trasera
-            0.5f, -0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 20 Derecha trasera
+           -0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 1.0f,   // 17 Izquierda frontal
+            0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 1.0f,   // 18 Derecha frontal
+           -0.5f, -0.5f,  0.2f,  1.0f, 0.0f, 1.0f,   // 19 Izquierda trasera
+            0.5f, -0.5f,  0.2f,  1.0f, 0.0f, 1.0f,   // 20 Derecha trasera
 
             // segunda Base 
-           -0.3f, -0.3f,  0.5f,  1.0f, 0.0f, 0.0f,   // 21 Izquierda frontal
-            0.3f, -0.3f,  0.5f,  1.0f, 0.0f, 0.0f,   // 22 Derecha frontal
-           -0.3f, -0.3f,  0.2f,  1.0f, 0.0f, 0.0f,   // 23 Izquierda trasera
-            0.3f, -0.3f,  0.2f,  1.0f, 0.0f, 0.0f,   // 24 Derecha trasera
-            
-            // Conexiones entre Columnas
-           -0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 2 a
-           -0.3f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 10
-           -0.5f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 6 a
-           -0.3f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 14
-            0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 4 a
-            0.3f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 12
-            0.5f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 8 a
-            0.3f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 16 
-
-            // Conexiones entre frente y atrás
-           -0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 2 a
-           -0.5f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 6
-            0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 4 a
-            0.5f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 8
-           -0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 17 a
-           -0.5f, -0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 19
-            0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 18 a
-            0.5f, -0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 20
-
-            // Conexiones entre frente y atrás (dentro de la figura)
-           -0.3f, -0.3f,  0.5f,  1.0f, 0.0f, 0.0f,   // 9 a
-           -0.3f, -0.3f,  0.2f,  1.0f, 0.0f, 0.0f,   // 13
-            0.3f, -0.3f,  0.5f,  1.0f, 0.0f, 0.0f,   // 11 a
-            0.3f, -0.3f,  0.2f,  1.0f, 0.0f, 0.0f,   // 15
-           -0.3f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 10 a
-           -0.3f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 14
-            0.3f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,   // 12 a
-            0.3f,  0.5f,  0.2f,  1.0f, 0.0f, 0.0f,   // 16
+           -0.3f, -0.3f,  0.5f,  1.0f, 0.0f, 1.0f,   // 21 Izquierda frontal
+            0.3f, -0.3f,  0.5f,  1.0f, 0.0f, 1.0f,   // 22 Derecha frontal
+           -0.3f, -0.3f,  0.2f,  1.0f, 0.0f, 1.0f,   // 23 Izquierda trasera
+            0.3f, -0.3f,  0.2f,  1.0f, 0.0f, 1.0f,   // 24 Derecha trasera
             };
 
-            // Crear y enlazar el VAO
+            uint[] indices = {
+                
+            //Cara Principal
+            0,1,  1,9,  9,8,  8,10,  10,11,  11,3,  3,2,  0,2, 
+            //Cara Trasera
+            4,5,  5,13,  13,12,  12,14,  14,15,  15,7,  7,6,  4,6,
+            //Conexiones
+            0,4,  1,5,  9,13,  8,12,  10,14, 11,15,  3,7,  2,6  
+            
+            };
+
+            
             _vertexArrayObject = GL.GenVertexArray();
             GL.BindVertexArray(_vertexArrayObject);
 
-            // Crear y enlazar el VBO
             _vertexBufferObject = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObject);
             GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * sizeof(float), vertices, BufferUsageHint.StaticDraw);
 
-            // Configurar el atributo de posición (posición y color están intercalados)
+            _elementBufferObject = GL.GenBuffer();
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, _elementBufferObject);
+            GL.BufferData(BufferTarget.ElementArrayBuffer, indices.Length * sizeof(uint), indices, BufferUsageHint.StaticDraw);
+
             GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 0);
             GL.EnableVertexAttribArray(0);
 
             GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 3 * sizeof(float));
             GL.EnableVertexAttribArray(1);
 
-            // Compilar shaders
             string vertexShaderSource = @"
                 #version 330 core
                 layout(location = 0) in vec3 aPosition;
@@ -156,8 +182,7 @@ namespace OpenTKCubo3D
             GL.DeleteShader(vertexShader);
             GL.DeleteShader(fragmentShader);
 
-            // Configurar la vista y la proyección
-            _view = Matrix4.LookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            _view = Matrix4.LookAt(new Vector3(2, 3, 5), Vector3.Zero, Vector3.UnitY);
             _projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, Size.X / (float)Size.Y, 0.1f, 100f);
         }
 
@@ -171,7 +196,6 @@ namespace OpenTKCubo3D
         protected override void OnUpdateFrame(FrameEventArgs args)
         {
             base.OnUpdateFrame(args);
-
             var input = KeyboardState;
 
             if (input.IsKeyDown(Keys.Escape))
@@ -179,23 +203,17 @@ namespace OpenTKCubo3D
                 Close();
             }
 
-            // Rotar el cubo con las flechas del teclado
-            if (input.IsKeyDown(Keys.Left))
-            {
-                _angleY -= 0.02f; // Rotación en el eje Y (izquierda)
-            }
-            if (input.IsKeyDown(Keys.Right))
-            {
-                _angleY += 0.02f; // Rotación en el eje Y (derecha)
-            }
-            if (input.IsKeyDown(Keys.Up))
-            {
-                _angleX -= 0.02f; // Rotación en el eje X (arriba)
-            }
-            if (input.IsKeyDown(Keys.Down))
-            {
-                _angleX += 0.02f; // Rotación en el eje X (abajo)
-            }
+            if (input.IsKeyDown(Keys.Left)) _angleY -= 0.02f;
+            if (input.IsKeyDown(Keys.Right)) _angleY += 0.02f;
+            if (input.IsKeyDown(Keys.Up)) _angleX -= 0.02f;
+            if (input.IsKeyDown(Keys.Down)) _angleX += 0.02f;
+
+            if (input.IsKeyDown(Keys.W)) _figureZ -= 0.02f; 
+            if (input.IsKeyDown(Keys.S)) _figureZ += 0.02f; 
+            if (input.IsKeyDown(Keys.A)) _figureX -= 0.02f; 
+            if (input.IsKeyDown(Keys.D)) _figureX += 0.02f; 
+            if (input.IsKeyDown(Keys.Q)) _figureY += 0.02f; 
+            if (input.IsKeyDown(Keys.E)) _figureY -= 0.02f; 
         }
 
         protected override void OnRenderFrame(FrameEventArgs args)
@@ -205,16 +223,21 @@ namespace OpenTKCubo3D
 
             GL.UseProgram(_shaderProgram);
 
-            // Configurar las matrices de transformación
-            Matrix4 model = Matrix4.CreateRotationY(_angleY) * Matrix4.CreateRotationX(_angleX);
-            GL.UniformMatrix4(GL.GetUniformLocation(_shaderProgram, "model"), false, ref model);
+            // Dibujar los ejes 
+            Matrix4 axisModel = Matrix4.Identity; 
+            GL.UniformMatrix4(GL.GetUniformLocation(_shaderProgram, "model"), false, ref axisModel);
             GL.UniformMatrix4(GL.GetUniformLocation(_shaderProgram, "view"), false, ref _view);
             GL.UniformMatrix4(GL.GetUniformLocation(_shaderProgram, "projection"), false, ref _projection);
 
-            // Dibujar el cubo
-            GL.BindVertexArray(_vertexArrayObject);
-            GL.DrawArrays(PrimitiveType.Lines, 0, 72); 
+            GL.BindVertexArray(_ejesVertexArrayObject);
+            GL.DrawElements(PrimitiveType.Lines, 6, DrawElementsType.UnsignedInt, 0);
 
+            // Dibujar la figura con rotación y traslación
+            Matrix4 model = Matrix4.CreateTranslation(_figureX, _figureY, _figureZ) * Matrix4.CreateRotationY(_angleY) * Matrix4.CreateRotationX(_angleX);
+            GL.UniformMatrix4(GL.GetUniformLocation(_shaderProgram, "model"), false, ref model);
+
+            GL.BindVertexArray(_vertexArrayObject);
+            GL.DrawElements(PrimitiveType.Lines, 48, DrawElementsType.UnsignedInt, 0);
 
             SwapBuffers();
         }
