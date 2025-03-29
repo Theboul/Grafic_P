@@ -13,7 +13,7 @@ namespace OpenTKCubo3D
         //
         //private Figura? Figura_U;
         private List<ObjetoU> objetos = new List<ObjetoU>();
-        private int cantidadCopias = 7; // Número de figuras a crear
+        private int cantidadCopias = 4; 
         //private ObjetoU ObjetoU = null!;
 
         public Program(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings)
@@ -27,18 +27,28 @@ namespace OpenTKCubo3D
             GL.ClearColor(0.0f, 0.0f, 0.1f, 0.1f);
             GL.Enable(EnableCap.DepthTest);
             
-            for (int i = 0; i < cantidadCopias; i++)
+           /* for (int i = 0; i < cantidadCopias; i++)
             {
                 float angle = i * (2 * MathHelper.Pi / cantidadCopias);
                 float x = (float)Math.Cos(angle) * 1.1f;
                 float z = (float)Math.Sin(angle) * 1.1f;
     
-                objetos.Add(new ObjetoU(
-                new Puntos(x, 0.0f, z),
-                1.0f, 1.0f, 0.3f,
-                Color4.Red));
+                objetos.Add(new ObjetoU(new Puntos(x, 0.0f, z), 1.0f, 1.0f, 0.3f, Color4.Red));
+            }*/
+            
+            var random = new Random();
+            float areaDistribucion = 2.0f; 
+
+            for (int i = 0; i < cantidadCopias; i++)
+            {
+            
+            float x = (float)(random.NextDouble() * areaDistribucion - areaDistribucion/2);
+            float y = (float)(random.NextDouble() * areaDistribucion - areaDistribucion/2);
+            float z = (float)(random.NextDouble() * areaDistribucion - areaDistribucion/2);
+        
+            objetos.Add(new ObjetoU(new Puntos(x, y, z), 1.5f, 1.5f, 0.3f, Color4.Blue));             
             }
-    
+
            // ObjetoU = new ObjetoU(new Puntos(0, 0, 0), 1.5f, 1.5f, 0.3f, Color4.Red);
 
             _view = Matrix4.LookAt(new Vector3(2, 3, 5), Vector3.Zero, Vector3.UnitY);
@@ -52,9 +62,9 @@ namespace OpenTKCubo3D
             base.OnResize(e);
             GL.Viewport(0, 0, Size.X, Size.Y);
             _projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, Size.X / (float)Size.Y, 0.1f, 100f);
+                 
         }
 
-       
 
         protected override void OnRenderFrame(FrameEventArgs args)
         {
@@ -99,28 +109,6 @@ namespace OpenTKCubo3D
           }
           GL.End();
        }
-
-       /*  protected override void OnUpdateFrame(FrameEventArgs args){
-            base.OnUpdateFrame(args);
-            var input = KeyboardState;
-
-            if (input.IsKeyDown(Keys.Escape))
-            {
-                Close();
-            }
-
-            if (input.IsKeyDown(Keys.Left))  ObjetoU.Rotar (0, -0.02f);
-            if (input.IsKeyDown(Keys.Right)) ObjetoU.Rotar (0,  0.02f);
-            if (input.IsKeyDown(Keys.Up))    ObjetoU.Rotar (-0.02f, 0);
-            if (input.IsKeyDown(Keys.Down))  ObjetoU.Rotar ( 0.02f, 0);
-
-            if (input.IsKeyDown(Keys.W)) ObjetoU.Mover(0, 0, -0.02f); 
-            if (input.IsKeyDown(Keys.S)) ObjetoU.Mover(0, 0,  0.02f); 
-            if (input.IsKeyDown(Keys.A)) ObjetoU.Mover(-0.02f, 0, 0); 
-            if (input.IsKeyDown(Keys.D)) ObjetoU.Mover( 0.02f, 0, 0); 
-            if (input.IsKeyDown(Keys.Q)) ObjetoU.Mover( 0, 0.02f, 0); 
-            if (input.IsKeyDown(Keys.E)) ObjetoU.Mover(0, -0.02f, 0); 
-        }*/
 
         static void Main(string[] args)
         {
