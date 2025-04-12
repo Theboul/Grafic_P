@@ -1,11 +1,10 @@
 
-
 namespace OpenTKCubo3D
 {
     public class Puntos
     {
         public float[] puntosP = new float[3];
-
+        public static Puntos Zero => new Puntos(0, 0, 0);
         public Puntos(float x, float y, float z)
         {
             puntosP[0] = x;
@@ -13,7 +12,7 @@ namespace OpenTKCubo3D
             puntosP[2] = z;
         }
 
-        // Propiedades para acceder a los elementos del vector (opcional)
+        // Propiedades para acceder a los elementos del vector puntosP 
         public float X
         {
             get { return puntosP[0]; }

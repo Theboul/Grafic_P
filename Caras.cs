@@ -6,17 +6,16 @@ namespace OpenTKCubo3D
 {
     public class Caras
     {
-        private Puntos[] vertices;
+        private List<Puntos> Vertices;
         private Puntos origen;
         private Color4 color;
 
-
-        public Caras(Puntos[] vertices, Puntos origen, Color4 color)
+        public Caras(List<Puntos> vertices, Puntos origen, Color4 color)
         {
-             if (vertices.Length != 4)
-                throw new ArgumentException("Deben proporcionarse exactamente 4 vértices.");
+             if (vertices == null || vertices.Count < 2)
+                throw new ArgumentException("Deben proporcionarse al menos 2 vértices.");
 
-            this.vertices = vertices;
+            Vertices = vertices;
             this.origen = origen;
             this.color = color;
         }
@@ -27,24 +26,33 @@ namespace OpenTKCubo3D
             set { origen = value;}
         }
 
-        /*public void Dibujar(){
-            GL.Begin(PrimitiveType.Quads);
-            GL.Color4(color);
-            GL.Vertex3(vertices[0].X, vertices[0].Y, vertices[0].Z);
-            GL.Vertex3(vertices[1].X, vertices[1].Y, vertices[1].Z);
-            GL.Vertex3(vertices[2].X, vertices[2].Y, vertices[2].Z);
-            GL.Vertex3(vertices[3].X, vertices[3].Y, vertices[3].Z);
-            GL.End();
-        }*/
 
         public void Dibujar(){
-           GL.Begin(PrimitiveType.Quads);
+
+            PrimitiveType tipoPrimitiva = Vertices.Count switch
+            {
+              2 => PrimitiveType.Lines,
+              3 => PrimitiveType.Triangles,
+              4 => PrimitiveType.Quads,
+              _ => PrimitiveType.Polygon
+            };
+
+           GL.Begin(tipoPrimitiva);
            GL.Color4(color);
-           foreach (var vertice in vertices)
+           foreach (var vert in Vertices)
            {
-            GL.Vertex3(vertice.X, vertice.Y, vertice.Z);
+            GL.Vertex3(vert.X, vert.Y, vert.Z);
            }
            GL.End();
+        }
+
+
+        public static void DibujarEjes()
+        {
+         new Caras(new List<Puntos>{new (-2.0f, 0, 0), new (2.0f, 0, 0)}, Puntos.Zero, Color4.Red).Dibujar();
+         new Caras(new List<Puntos>{new (0, -2.0f, 0), new (0, 2.0f, 0)}, Puntos.Zero, Color4.Green).Dibujar();
+         new Caras(new List<Puntos>{new (0, 0, -2.0f), new (0, 0, 2.0f)}, Puntos.Zero, Color4.Blue).Dibujar();
+        
         }
     };
 

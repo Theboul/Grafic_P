@@ -8,17 +8,14 @@ namespace OpenTKCubo3D
 {
     class Program : GameWindow
     {
-        private Matrix4 _view;
-        private Matrix4 _projection;
-        //
-        //private Figura? Figura_U;
-        private List<ObjetoU> objetos = new List<ObjetoU>();
-        private int cantidadCopias = 4; 
-        //private ObjetoU ObjetoU = null!;
+        private Matrix4 _view, _projection;
+       
+        private readonly Escenario escenario;
 
         public Program(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings)
             : base(gameWindowSettings, nativeWindowSettings)
         {
+            escenario = new Escenario();
         }
 
         protected override void OnLoad()
@@ -26,33 +23,14 @@ namespace OpenTKCubo3D
            base.OnLoad();
             GL.ClearColor(0.0f, 0.0f, 0.1f, 0.1f);
             GL.Enable(EnableCap.DepthTest);
-            
-           /* for (int i = 0; i < cantidadCopias; i++)
-            {
-                float angle = i * (2 * MathHelper.Pi / cantidadCopias);
-                float x = (float)Math.Cos(angle) * 1.1f;
-                float z = (float)Math.Sin(angle) * 1.1f;
-    
-                objetos.Add(new ObjetoU(new Puntos(x, 0.0f, z), 1.0f, 1.0f, 0.3f, Color4.Red));
-            }*/
-            
-            var random = new Random();
-            float areaDistribucion = 2.0f; 
 
-            for (int i = 0; i < cantidadCopias; i++)
-            {
+            escenario.Cargar("C:/Users/Usuario/Grafic_Figura/JsonClass/mi_escenario.json");
+            //escenario.IniEscenario(2, Color4.Gold);
+            //escenario.Guardar("C:/Users/Usuario/Grafic_Figura/JsonClass/mi_escenario.json");
+
             
-            float x = (float)(random.NextDouble() * areaDistribucion - areaDistribucion/2);
-            float y = (float)(random.NextDouble() * areaDistribucion - areaDistribucion/2);
-            float z = (float)(random.NextDouble() * areaDistribucion - areaDistribucion/2);
-        
-            objetos.Add(new ObjetoU(new Puntos(x, y, z), 1.5f, 1.5f, 0.3f, Color4.Blue));             
-            }
-
-           // ObjetoU = new ObjetoU(new Puntos(0, 0, 0), 1.5f, 1.5f, 0.3f, Color4.Red);
-
+            
             _view = Matrix4.LookAt(new Vector3(2, 3, 5), Vector3.Zero, Vector3.UnitY);
-
             _projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, Size.X / (float)Size.Y, 0.1f, 100f);
                         
         }
@@ -76,40 +54,14 @@ namespace OpenTKCubo3D
 
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadMatrix(ref _view);
-
-            DibujarEjes();
-          
-           foreach (var objeto in objetos)
-           {
-             objeto.Dibujar();
-           }
-           // ObjetoU?.Dibujar();
+                    
+            escenario.DibujarTodo(); 
+                         
 
           SwapBuffers();
        }
            
-        private void DibujarEjes()
-        {
-          GL.Begin(PrimitiveType.Lines);
-          {
-          // Eje X (Rojo)
-          GL.Color3(1.0f, 0.0f, 0.0f);
-          GL.Vertex3(-2.0f, 0.0f, 0.0f);
-          GL.Vertex3(2.0f, 0.0f, 0.0f);
-
-          // Eje Y (Verde)
-          GL.Color3(0.0f, 1.0f, 0.0f);
-          GL.Vertex3(0.0f, -2.0f, 0.0f);
-          GL.Vertex3(0.0f, 2.0f, 0.0f);
-
-          // Eje Z (Azul)
-          GL.Color3(0.0f, 0.0f, 1.0f);
-          GL.Vertex3(0.0f, 0.0f, -2.0f);
-          GL.Vertex3(0.0f, 0.0f, 2.0f);
-          }
-          GL.End();
-       }
-
+        
         static void Main(string[] args)
         {
             var nativeWindowSettings = new NativeWindowSettings()

@@ -4,12 +4,12 @@ namespace OpenTKCubo3D
 {
     public class ObjetoU
     {
-        private List<Figura> partes; 
-        private Puntos centro;
-        private float anchoTotal;
-        private float altoTotal;
-        private float profundidad;
-        private Color4 color;
+        public List<Figura> partes; 
+        public Puntos centro;
+        public float anchoTotal;
+        public float altoTotal;
+        public float profundidad;
+        public Color4 color;
 
         public float _x, _y, _z;
         public float _angleX, _angleY;
@@ -30,7 +30,7 @@ namespace OpenTKCubo3D
 
             this.centro = new Puntos(_x, _y, _z);
             partes = new List<Figura>();
-            CalcularPartes();
+            CalcularPartesU();
         }
         
 
@@ -43,10 +43,10 @@ namespace OpenTKCubo3D
         private void ActualizarCentro()
         {
             centro = new Puntos(_x, _y, _z);
-            CalcularPartes();
+            CalcularPartesU();
         }
 
-        private void CalcularPartes()
+        private void CalcularPartesU()
         {
             partes.Clear();
             // Dimensiones de las partes
@@ -71,37 +71,11 @@ namespace OpenTKCubo3D
 
         public void Dibujar()
         {
-           GL.PushMatrix();
-           GL.Translate(_x, _y, _z); // Aplicar traslación global
-           GL.Rotate(_angleX, 1.0f, 0.0f, 0.0f); // Rotación X
-           GL.Rotate(_angleY, 0.0f, 1.0f, 0.0f); // Rotación Y
-            foreach (var parte in partes)
+            foreach (var figura in partes)
             {
-                parte.Dibujar();
+                figura.Dibujar();
             }
-
-            GL.PopMatrix();
         }
-            
-
         
-
-            public void Mover(float dx, float dy, float dz)
-            {
-               PosX += dx;
-               PosY += dy;
-               PosZ += dz;
-            }
-
-            public void Rotar(float deltaX, float deltaY)
-            {
-               RotX += deltaX*10;
-               RotY += deltaY*10;
-            }
-        /*public void Mover(Puntos nuevoCentro)
-        {
-            centro = nuevoCentro;
-            CalcularPartes(); // Recalcula las posiciones
-        }*/
     }
 }
