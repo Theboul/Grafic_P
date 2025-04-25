@@ -3,37 +3,79 @@ using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Graphics.OpenGL;
+using OpenTKCubo3D.UI;
+ 
 
 namespace OpenTKCubo3D
 {
+    
     class Program : GameWindow
     {
         private Matrix4 _view, _projection;
+        private ImGuiController _imgui = null!;
+        private PanelTransformaciones panel = null!;
        
-        private readonly Escenario escenario;
-
         public Program(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings)
             : base(gameWindowSettings, nativeWindowSettings)
         {
-            escenario = new Escenario();
         }
 
         protected override void OnLoad()
         {
            base.OnLoad();
+           
+
             GL.ClearColor(0.0f, 0.0f, 0.1f, 0.1f);
             GL.Enable(EnableCap.DepthTest);
+            //GL.Enable(EnableCap.CullFace);
 
-            escenario.Cargar("C:/Users/Usuario/Grafic_Figura/JsonClass/mi_escenario.json");
-            //escenario.IniEscenario(2, Color4.Gold);
-            //escenario.Guardar("C:/Users/Usuario/Grafic_Figura/JsonClass/mi_escenario.json");
+            GestorEscenarios.Cargar("objetos_U");
 
-            
-            
+            /*var figura = GestorEscenarios.EscenarioActual.GetObjeto("u1");
+            figura.Partes["lateral_izq"].Transladar(-2.0f, 0.0f, 0.0f);
+            GestorEscenarios.CrearEscenarioVacio("objetos_U");
+            var obj = new ObjetoU(new Puntos(-2, 0, 0), 1f, 1f, 0.3f, Color4.Blue);
+            var obj1 = new ObjetoU(new Puntos(2, 0, 0), 1f, 1f, 0.3f, Color4.Red);
+            GestorEscenarios.EscenarioActual.Objetos.Add("u1", obj);
+            GestorEscenarios.EscenarioActual.Objetos.Add("u2", obj1);
+            GestorEscenarios.EscenarioActual.RecalcularCentroDeMasa();
+            GestorEscenarios.Guardar("objetos_U");*/
+
+            panel = new PanelTransformaciones(GestorEscenarios.EscenarioActual);
+           _imgui = new ImGuiController(this);
+
             _view = Matrix4.LookAt(new Vector3(2, 3, 5), Vector3.Zero, Vector3.UnitY);
             _projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, Size.X / (float)Size.Y, 0.1f, 100f);
                         
         }
+
+        
+        protected override void OnRenderFrame(FrameEventArgs args)
+        {
+            base.OnRenderFrame(args);
+            _imgui.Update((float)args.Time); // actualizamos ImGui
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadIdentity();
+            GL.LoadMatrix(ref _projection); // Usa la matriz de proyección que ya tenías
+
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.LoadIdentity();
+            GL.LoadMatrix(ref _view);
+
+            UIEditor.Render(panel);     
+
+            foreach (var escenario in GestorEscenarios.Todos.Values)
+            {        
+                escenario.DibujarTodo(Matrix4.Identity);
+            }
+
+            //GestorEscenarios.EscenarioActual?.DibujarTodo(); 
+           _imgui.Render(); // renderizamos ImGui
+           SwapBuffers();
+       }
+           
 
         protected override void OnResize(ResizeEventArgs e)
         {
@@ -43,25 +85,6 @@ namespace OpenTKCubo3D
                  
         }
 
-
-        protected override void OnRenderFrame(FrameEventArgs args)
-        {
-            base.OnRenderFrame(args);
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadMatrix(ref _projection); // Usa la matriz de proyección que ya tenías
-
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadMatrix(ref _view);
-                    
-            escenario.DibujarTodo(); 
-                         
-
-          SwapBuffers();
-       }
-           
-        
         static void Main(string[] args)
         {
             var nativeWindowSettings = new NativeWindowSettings()

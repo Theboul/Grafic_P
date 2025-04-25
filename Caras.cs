@@ -1,4 +1,5 @@
 
+using System.Text.Json.Serialization;
 using OpenTK.Mathematics;
 using OpenTK.Graphics.OpenGL;
 
@@ -6,28 +7,36 @@ namespace OpenTKCubo3D
 {
     public class Caras
     {
-        private List<Puntos> Vertices;
-        private Puntos origen;
-        private Color4 color;
-
-        public Caras(List<Puntos> vertices, Puntos origen, Color4 color)
+        public Dictionary<string, Puntos> Vertices { get; set; } = new Dictionary<string, Puntos>();
+        public Puntos? Origen { get; set; } = new();
+        public Color4 Color { get; set; } = Color4.White;
+        
+        [JsonIgnore]
+        public Transformaciones Transform { get; } = new Transformaciones();
+        [JsonIgnore]
+        public Vector3 centroDeMasa { get; set; }
+        [JsonPropertyName("centroDeMasa")]
+        public Puntos CentroDeMasaSerializable
         {
-             if (vertices == null || vertices.Count < 2)
-                throw new ArgumentException("Deben proporcionarse al menos 2 vértices.");
+            get => new Puntos(centroDeMasa.X, centroDeMasa.Y, centroDeMasa.Z);
+            set => centroDeMasa = value.ToVector3();
+        }
 
+        public Caras(){}
+        public Caras(Dictionary<string, Puntos> vertices, Puntos origen, Color4 color)
+        {
             Vertices = vertices;
-            this.origen = origen;
-            this.color = color;
+            Origen = origen;
+            Color = color;
+            centroDeMasa = CalcularCentro();
         }
+  
+        
+        public void Dibujar(Matrix4 matrizAcumulada){
 
-        public Puntos Origen
-        {
-            get { return origen;}
-            set { origen = value;}
-        }
+            Matrix4 matrizLocal = Transform.GetMatrix(centroDeMasa);
+            Matrix4 matrizFinal = matrizLocal * matrizAcumulada;
 
-
-        public void Dibujar(){
 
             PrimitiveType tipoPrimitiva = Vertices.Count switch
             {
@@ -38,23 +47,41 @@ namespace OpenTKCubo3D
             };
 
            GL.Begin(tipoPrimitiva);
-           GL.Color4(color);
+           GL.Color4(Color);
            foreach (var vert in Vertices)
            {
-            GL.Vertex3(vert.X, vert.Y, vert.Z);
+            Vector3 transformado = Vector3.TransformPosition(vert.Value.ToVector3(), matrizFinal);
+            GL.Vertex3(transformado);
            }
            GL.End();
+
         }
 
+        public Vector3 CalcularCentro() => Puntos.CalcularCentro(Vertices.Values);
 
-        public static void DibujarEjes()
+
+        public void Rotar(float xDeg, float yDeg, float zDeg)
         {
-         new Caras(new List<Puntos>{new (-2.0f, 0, 0), new (2.0f, 0, 0)}, Puntos.Zero, Color4.Red).Dibujar();
-         new Caras(new List<Puntos>{new (0, -2.0f, 0), new (0, 2.0f, 0)}, Puntos.Zero, Color4.Green).Dibujar();
-         new Caras(new List<Puntos>{new (0, 0, -2.0f), new (0, 0, 2.0f)}, Puntos.Zero, Color4.Blue).Dibujar();
+
+            Transform.RotateAround(centroDeMasa, xDeg, yDeg, zDeg);
+        }
+
+        public void Escalar(float factor)
+        {
+            Transform.Position -= centroDeMasa;
+            Transform.Escalate(factor);
+            Transform.Position += centroDeMasa;
+        }
+
+        public void Transladar(float dx, float dy, float dz)
+        {
+            Transform.Transladate(dx, dy, dz);
+        }
+
         
+        public void RecalcularCentroDeMasa()
+        {
+            centroDeMasa = CalcularCentro();
         }
     };
-
-
 }

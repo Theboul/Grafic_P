@@ -1,34 +1,49 @@
 
+using OpenTK.Mathematics;
 namespace OpenTKCubo3D
 {
     public class Puntos
     {
-        public float[] puntosP = new float[3];
+        
+        public float X { get; set; }
+        public float Y { get; set; }
+        public float Z { get; set; }
         public static Puntos Zero => new Puntos(0, 0, 0);
+
+        public Puntos(){}
+
         public Puntos(float x, float y, float z)
         {
-            puntosP[0] = x;
-            puntosP[1] = y;
-            puntosP[2] = z;
+            X = x; Y = y; Z = z;
         }
 
-        // Propiedades para acceder a los elementos del vector puntosP 
-        public float X
+        public  Vector3 ToVector3()
         {
-            get { return puntosP[0]; }
-            set { puntosP[0] = value; }
+            return new Vector3(X, Y, Z);
         }
 
-        public float Y
-        {
-            get { return puntosP[1]; }
-            set { puntosP[1] = value; }
-        }
 
-        public float Z
+        public static Vector3 CalcularCentro(IEnumerable<Puntos> puntos)
         {
-            get { return puntosP[2]; }
-            set { puntosP[2] = value; }
-        }
+            float totalX = 0, totalY = 0, totalZ = 0;
+            int cantPts = 0;
+            foreach (var punto in puntos)
+            {
+                
+                totalX += punto.X;
+                totalY += punto.Y;
+                totalZ += punto.Z;
+                cantPts++;
+            }
+
+            if (cantPts == 0) return Vector3.Zero; 
+            
+            float promedioX = totalX / cantPts;
+            float promedioY = totalY / cantPts;
+            float promedioZ = totalZ / cantPts;
+
+            return new Vector3(promedioX, promedioY, promedioZ);
+
+        }         
     }
 }
