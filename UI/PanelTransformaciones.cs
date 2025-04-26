@@ -1,4 +1,3 @@
-
 namespace OpenTKCubo3D.UI
 {
     public class PanelTransformaciones
@@ -22,61 +21,28 @@ namespace OpenTKCubo3D.UI
             _idCara = idCara;
         }
 
-        public void Rotar(float xDeg, float yDeg, float zDeg)
+        public void Rotar(float xDeg, float yDeg, float zDeg) => AplicarAccion(n => n.Rotar(xDeg, yDeg, zDeg));
+
+        public void Escalar(float factor) => AplicarAccion(n => n.Escalar(factor));
+
+        public void Transladar(float dx, float dy, float dz) => AplicarAccion(n => n.Transladar(dx, dy, dz));
+
+        private void AplicarAccion(Action<dynamic> accion)
         {
-            switch (_nivelActual)
+            dynamic target = _nivelActual switch
             {
-                case Nivel.Escenario:
-                    _escenario.Rotar(xDeg, yDeg, zDeg);
-                    break;
-                case Nivel.Objeto:
-                    _escenario.GetObjeto(_idObjeto!).Rotar(xDeg, yDeg, zDeg);
-                    break;
-                case Nivel.Figura:
-                    _escenario.GetObjeto(_idObjeto!).Partes[_idParte!].Rotar(xDeg, yDeg, zDeg);
-                    break;
-                case Nivel.Cara:
-                    _escenario.GetObjeto(_idObjeto!).Partes[_idParte!].Caras[_idCara!].Rotar(xDeg, yDeg, zDeg);
-                    break;
-            }
+                Nivel.Escenario => _escenario,
+                Nivel.Objeto => _escenario.GetObjeto(_idObjeto!),
+                Nivel.Figura => _escenario.GetObjeto(_idObjeto!).Partes[_idParte!],
+                Nivel.Cara => _escenario.GetObjeto(_idObjeto!).Partes[_idParte!].Caras[_idCara!],
+                _ => _escenario
+            };
+            accion(target);
         }
 
-        public void Escalar(float factor)
+        public void CambiarEscenario(Escenario nuevoEscenario)
         {
-            switch (_nivelActual)
-            {
-                case Nivel.Escenario:
-                    _escenario.Escalar(factor);
-                    break;
-                case Nivel.Objeto:
-                    _escenario.GetObjeto(_idObjeto!).Escalar(factor);
-                    break;
-                case Nivel.Figura:
-                    _escenario.GetObjeto(_idObjeto!).Partes[_idParte!].Escalar(factor);
-                    break;
-                case Nivel.Cara:
-                    _escenario.GetObjeto(_idObjeto!).Partes[_idParte!].Caras[_idCara!].Escalar(factor);
-                    break;
-            }
-        }
-
-        public void Transladar(float dx, float dy, float dz)
-        {
-            switch (_nivelActual)
-            {
-                case Nivel.Escenario:
-                    _escenario.Transladar(dx, dy, dz);
-                    break;
-                case Nivel.Objeto:
-                    _escenario.GetObjeto(_idObjeto!).Transladar(dx, dy, dz);
-                    break;
-                case Nivel.Figura:
-                    _escenario.GetObjeto(_idObjeto!).Partes[_idParte!].Transladar(dx, dy, dz);
-                    break;
-                case Nivel.Cara:
-                    _escenario.GetObjeto(_idObjeto!).Partes[_idParte!].Caras[_idCara!].Transladar(dx, dy, dz);
-                    break;
-            }
+            _escenario = nuevoEscenario;
         }
     }
 }

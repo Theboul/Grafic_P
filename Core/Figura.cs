@@ -7,8 +7,7 @@ namespace OpenTKCubo3D
         public Dictionary<string, Caras> Caras { get; set; } = new Dictionary<string, Caras>();
         public Puntos Origen { get; set; } = new();
         public Color4 Color { get; set; } = Color4.White;
-        
-        [JsonIgnore]
+
         public Transformaciones Transform { get; } = new Transformaciones();
         [JsonIgnore]
         public Vector3 centroDeMasa { get; set; }
@@ -54,7 +53,7 @@ namespace OpenTKCubo3D
 
         public void Rotar(float xDeg, float yDeg, float zDeg)
         {
-            Transform.RotateAround(centroDeMasa, xDeg, yDeg, zDeg);
+            Transform.RotateA(centroDeMasa, xDeg, yDeg, zDeg);
         }
 
         public void Escalar(float f)

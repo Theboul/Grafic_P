@@ -1,5 +1,6 @@
 
 using OpenTK.Mathematics;
+using OpenTK.Graphics.OpenGL;
 
 namespace OpenTKCubo3D
 {
@@ -92,7 +93,7 @@ namespace OpenTKCubo3D
             return partes;
         }
 
-        public static void DibujarEjes()
+        /*public static void DibujarEjes()
         {
             Matrix4 identidad = Matrix4.Identity;
             //Rojo
@@ -127,7 +128,36 @@ namespace OpenTKCubo3D
                 Puntos.Zero,
                 Color4.Blue
             ).Dibujar(identidad);
+        }*/
+
+        public static void DibujarEjes()
+        {
+            GL.Begin(PrimitiveType.Lines);
+
+            // Eje X en rojo
+            GL.Color3(1f, 0f, 0f); 
+            GL.Vertex3(-2f, 0f, 0f); 
+            GL.Vertex3(0f, 0f, 0f);
+            GL.Vertex3(0f, 0f, 0f); 
+            GL.Vertex3(2f, 0f, 0f);
+
+            // Eje Y en verde
+            GL.Color3(0f, 1f, 0f);
+            GL.Vertex3(0f, -2f, 0f); 
+            GL.Vertex3(0f, 0f, 0f);
+            GL.Vertex3(0f, 0f, 0f);  
+            GL.Vertex3(0f, 2f, 0f);
+
+            // Eje Z en azul
+            GL.Color3(0f, 0f, 1f);
+            GL.Vertex3(0f, 0f, -2f); 
+            GL.Vertex3(0f, 0f, 0f);
+            GL.Vertex3(0f, 0f, 0f);  
+            GL.Vertex3(0f, 0f, 2f);
+
+            GL.End();
         }
+
         
     }
 }

@@ -5,8 +5,9 @@ namespace OpenTKCubo3D
     public class Escenario
     {
         public Dictionary<string, ObjetoU> Objetos { get; set; } = new();
-
         [JsonIgnore]
+        public bool MostrarEjes { get; set; } = true; 
+
         public Transformaciones Transform { get; } = new Transformaciones();
         [JsonIgnore]
         public Vector3 centroDeMasa { get; set; }
@@ -23,7 +24,9 @@ namespace OpenTKCubo3D
         {
             var matrizLocal = Transform.GetMatrix(centroDeMasa);
             Matrix4 matrizAcumulada = matrizLocal * matrizPadre;
-            ModeloU.DibujarEjes();
+            if (MostrarEjes){
+                ModeloU.DibujarEjes();
+            }
             foreach (var obj in Objetos.Values){
                 obj.Dibujar(matrizAcumulada); 
             }
@@ -48,7 +51,7 @@ namespace OpenTKCubo3D
 
         public void Rotar(float xDeg, float yDeg, float zDeg)
         {
-            Transform.RotateAround(centroDeMasa, xDeg, yDeg, zDeg);
+            Transform.RotateA(centroDeMasa, xDeg, yDeg, zDeg);
         }
 
         public void Escalar(float f)

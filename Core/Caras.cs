@@ -11,7 +11,6 @@ namespace OpenTKCubo3D
         public Puntos? Origen { get; set; } = new();
         public Color4 Color { get; set; } = Color4.White;
         
-        [JsonIgnore]
         public Transformaciones Transform { get; } = new Transformaciones();
         [JsonIgnore]
         public Vector3 centroDeMasa { get; set; }
@@ -38,14 +37,7 @@ namespace OpenTKCubo3D
             Matrix4 matrizFinal = matrizLocal * matrizAcumulada;
 
 
-            PrimitiveType tipoPrimitiva = Vertices.Count switch
-            {
-              2 => PrimitiveType.Lines,
-              3 => PrimitiveType.Triangles,
-              4 => PrimitiveType.Quads,
-              _ => PrimitiveType.Polygon
-            };
-
+           PrimitiveType tipoPrimitiva = PrimitiveType.Quads;
            GL.Begin(tipoPrimitiva);
            GL.Color4(Color);
            foreach (var vert in Vertices)
@@ -62,8 +54,7 @@ namespace OpenTKCubo3D
 
         public void Rotar(float xDeg, float yDeg, float zDeg)
         {
-
-            Transform.RotateAround(centroDeMasa, xDeg, yDeg, zDeg);
+            Transform.RotateA(centroDeMasa, xDeg, yDeg, zDeg);
         }
 
         public void Escalar(float factor)
@@ -83,5 +74,6 @@ namespace OpenTKCubo3D
         {
             centroDeMasa = CalcularCentro();
         }
+
     };
 }

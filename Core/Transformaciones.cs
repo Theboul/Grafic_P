@@ -1,11 +1,36 @@
+using System.Text.Json.Serialization;
 using OpenTK.Mathematics;
 
 namespace OpenTKCubo3D
 {
     public class Transformaciones(){
+        [JsonIgnore]
         public Vector3 Position { get; set; } = Vector3.Zero;
+        [JsonIgnore]
         public Vector3 Rotation { get; set; } = Vector3.Zero; 
+        [JsonIgnore]
         public Vector3 Scale { get; set; } = Vector3.One;
+
+        [JsonPropertyName("position")]
+        public Puntos PositionSerializable
+        {
+            get => new Puntos(Position.X, Position.Y, Position.Z);
+            set => Position = value.ToVector3();
+        }
+
+        [JsonPropertyName("rotation")]
+        public Puntos RotationSerializable
+        {
+            get => new Puntos(Rotation.X, Rotation.Y, Rotation.Z);
+            set => Rotation = value.ToVector3();
+        }
+
+        [JsonPropertyName("scale")]
+        public Puntos ScaleSerializable
+        {
+            get => new Puntos(Scale.X, Scale.Y, Scale.Z);
+            set => Scale = value.ToVector3();
+        }
 
 
         public Matrix4 GetMatrix(Vector3 centro) => Matrix4.CreateTranslation(-centro) *
@@ -22,13 +47,15 @@ namespace OpenTKCubo3D
             Rotation += new Vector3(xDeg, yDeg, zDeg);
         }
 
-        public void RotateAround(Vector3 centro, float xDeg, float yDeg, float zDeg)
+        public void RotateA(Vector3 centro, float xDeg, float yDeg, float zDeg)
         {
             Rotate(xDeg, yDeg, zDeg);
         }
 
         public void Escalate(float n) {
+            if(n != 0){
             Scale *= new Vector3(n);
+            }
         }
     }
 

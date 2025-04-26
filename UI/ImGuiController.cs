@@ -7,23 +7,16 @@ using Vector2Num = System.Numerics.Vector2;
 
 namespace OpenTKCubo3D.UI
 {
-    public class ImGuiController
+    public class ImGuiController : IDisposable
     {
-        private GameWindow _window;
-        private Vector2 _scaleFactor = Vector2.One;
-  
+        private readonly GameWindow _window;
 
         private int _vertexArray;
         private int _vertexBuffer;
         private int _indexBuffer;
-
         private int _shader;
         private int _attribLocationTex;
         private int _attribLocationProjMtx;
-        private int _attribLocationPosition;
-        private int _attribLocationUV;
-        private int _attribLocationColor;
-
         private int _fontTexture;
 
         public ImGuiController(GameWindow window)
@@ -36,9 +29,6 @@ namespace OpenTKCubo3D.UI
             var io = ImGui.GetIO();
             io.ConfigFlags |= ImGuiConfigFlags.NavEnableKeyboard;
             io.BackendFlags |= ImGuiBackendFlags.HasMouseCursors;
-            io.BackendFlags |= ImGuiBackendFlags.HasSetMousePos;
-
-            _scaleFactor = Vector2.One;
 
             CreateDeviceResources();
             SetFontTexture();
@@ -50,7 +40,6 @@ namespace OpenTKCubo3D.UI
 
             io.DisplaySize = new Vector2Num(_window.Size.X, _window.Size.Y);
             io.DisplayFramebufferScale = Vector2Num.One;
-
             io.DeltaTime = deltaTime > 0.0f ? deltaTime : 1.0f / 60.0f;
 
             UpdateInput(io);
@@ -66,8 +55,7 @@ namespace OpenTKCubo3D.UI
             io.MouseDown[1] = mouse.IsButtonDown(MouseButton.Right);
             io.MouseDown[2] = mouse.IsButtonDown(MouseButton.Middle);
 
-            io.MousePos = new Vector2Num(mouse.X, mouse.Y);
-
+            io.MousePos = new Vector2Num(mouse.X,mouse.Y+35);
             io.MouseWheel = mouse.ScrollDelta.Y;
             io.MouseWheelH = mouse.ScrollDelta.X;
 
@@ -117,10 +105,12 @@ namespace OpenTKCubo3D.UI
                 for (int cmdi = 0; cmdi < cmdList.CmdBuffer.Size; cmdi++)
                 {
                     ImDrawCmdPtr drawCmd = cmdList.CmdBuffer[cmdi];
-                    GL.Scissor((int)drawCmd.ClipRect.X,
-                               (int)(_window.Size.Y - drawCmd.ClipRect.W),
-                               (int)(drawCmd.ClipRect.Z - drawCmd.ClipRect.X),
-                               (int)(drawCmd.ClipRect.W - drawCmd.ClipRect.Y));
+                    GL.Scissor(
+                        (int)drawCmd.ClipRect.X,
+                        (int)(_window.Size.Y - drawCmd.ClipRect.W),
+                        (int)(drawCmd.ClipRect.Z - drawCmd.ClipRect.X),
+                        (int)(drawCmd.ClipRect.W - drawCmd.ClipRect.Y)
+                    );
 
                     GL.BindTexture(TextureTarget.Texture2D, (int)drawCmd.TextureId);
                     GL.DrawElementsBaseVertex(PrimitiveType.Triangles, (int)drawCmd.ElemCount,
@@ -132,11 +122,6 @@ namespace OpenTKCubo3D.UI
             GL.Disable(EnableCap.ScissorTest);
             GL.BindVertexArray(0);
             GL.UseProgram(0);
-        }
-
-        public void Dispose()
-        {
-            ImGui.DestroyContext();
         }
 
         private void CreateDeviceResources()
@@ -155,7 +140,7 @@ namespace OpenTKCubo3D.UI
                 gl_Position = projection_matrix * vec4(Position.xy, 0, 1);
             }";
 
-                        string fragmentShaderSource = @"#version 330 core
+            string fragmentShaderSource = @"#version 330 core
             in vec2 Frag_UV;
             in vec4 Frag_Color;
             uniform sampler2D Texture;
@@ -170,23 +155,19 @@ namespace OpenTKCubo3D.UI
             _attribLocationTex = GL.GetUniformLocation(_shader, "Texture");
             _attribLocationProjMtx = GL.GetUniformLocation(_shader, "projection_matrix");
 
-            _attribLocationPosition = 0;
-            _attribLocationUV = 1;
-            _attribLocationColor = 2;
-
             _vertexBuffer = GL.GenBuffer();
             _indexBuffer = GL.GenBuffer();
             _vertexArray = GL.GenVertexArray();
 
             GL.BindVertexArray(_vertexArray);
             GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBuffer);
-            GL.EnableVertexAttribArray(_attribLocationPosition);
-            GL.EnableVertexAttribArray(_attribLocationUV);
-            GL.EnableVertexAttribArray(_attribLocationColor);
+            GL.EnableVertexAttribArray(0);
+            GL.EnableVertexAttribArray(1);
+            GL.EnableVertexAttribArray(2);
 
-            GL.VertexAttribPointer(_attribLocationPosition, 2, VertexAttribPointerType.Float, false, 20, 0);
-            GL.VertexAttribPointer(_attribLocationUV, 2, VertexAttribPointerType.Float, false, 20, 8);
-            GL.VertexAttribPointer(_attribLocationColor, 4, VertexAttribPointerType.UnsignedByte, true, 20, 16);
+            GL.VertexAttribPointer(0, 2, VertexAttribPointerType.Float, false, 20, 0);
+            GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, 20, 8);
+            GL.VertexAttribPointer(2, 4, VertexAttribPointerType.UnsignedByte, true, 20, 16);
 
             GL.BindVertexArray(0);
         }
@@ -227,6 +208,16 @@ namespace OpenTKCubo3D.UI
 
             io.Fonts.SetTexID(_fontTexture);
             GL.BindTexture(TextureTarget.Texture2D, 0);
+        }
+
+        public void Dispose()
+        {
+            ImGui.DestroyContext();
+            GL.DeleteTexture(_fontTexture);
+            GL.DeleteBuffer(_vertexBuffer);
+            GL.DeleteBuffer(_indexBuffer);
+            GL.DeleteVertexArray(_vertexArray);
+            GL.DeleteProgram(_shader);
         }
     }
 }

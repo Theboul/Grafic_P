@@ -29,17 +29,24 @@ namespace OpenTKCubo3D
             GL.Enable(EnableCap.DepthTest);
             //GL.Enable(EnableCap.CullFace);
 
-            GestorEscenarios.Cargar("objetos_U");
 
-            /*var figura = GestorEscenarios.EscenarioActual.GetObjeto("u1");
-            figura.Partes["lateral_izq"].Transladar(-2.0f, 0.0f, 0.0f);
-            GestorEscenarios.CrearEscenarioVacio("objetos_U");
-            var obj = new ObjetoU(new Puntos(-2, 0, 0), 1f, 1f, 0.3f, Color4.Blue);
-            var obj1 = new ObjetoU(new Puntos(2, 0, 0), 1f, 1f, 0.3f, Color4.Red);
-            GestorEscenarios.EscenarioActual.Objetos.Add("u1", obj);
-            GestorEscenarios.EscenarioActual.Objetos.Add("u2", obj1);
+            GestorEscenarios.Cargar("objetos_U");
+            //GestorEscenarios.Cargar("objetos_U1");
+
+            
+            /*
+            GestorEscenarios.CrearEscenarioVacio("objetos_U1");
+            var nuevoObjeto = new ObjetoU( new Puntos(0.0f, 0.0f, -2.0f), 1.0f, 1.0f, 0.3f, Color4.Purple);
+            var nuevoObjeto1 = new ObjetoU( new Puntos(0.0f, 0.0f, 0.0f), 1.0f, 1.0f, 0.3f, Color4.SkyBlue);
+            var nuevoObjeto2 = new ObjetoU( new Puntos(0.0f, 1.0f, -1.0f), 1.0f, 1.0f, 0.3f, Color4.Orange);
+            GestorEscenarios.EscenarioActual.AgregarObjeto("u1_2", nuevoObjeto);
+            GestorEscenarios.EscenarioActual.AgregarObjeto("u1_3", nuevoObjeto1);
+            GestorEscenarios.EscenarioActual.AgregarObjeto("u1_4", nuevoObjeto2);
             GestorEscenarios.EscenarioActual.RecalcularCentroDeMasa();
-            GestorEscenarios.Guardar("objetos_U");*/
+            GestorEscenarios.Guardar("objetos_U1");
+            GestorEscenarios._escenarios["objetos_U1"].Objetos.Add("u1_5", objetoNuevo3);
+            */
+            
 
             panel = new PanelTransformaciones(GestorEscenarios.EscenarioActual);
            _imgui = new ImGuiController(this);
@@ -71,7 +78,7 @@ namespace OpenTKCubo3D
                 escenario.DibujarTodo(Matrix4.Identity);
             }
 
-            //GestorEscenarios.EscenarioActual?.DibujarTodo(); 
+            //GestorEscenarios.EscenarioActual?.DibujarTodo(Matrix4.Identity); 
            _imgui.Render(); // renderizamos ImGui
            SwapBuffers();
        }

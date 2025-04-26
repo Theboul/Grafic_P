@@ -11,8 +11,10 @@ namespace OpenTKCubo3D{
         public static void Cargar(string nombreArchivo)
         {
             var escenario = Utilidades.Cargar<Escenario>("escenarios", nombreArchivo);
-            if (escenario.Objetos.Count == 0)
-                escenario = new Escenario();
+            
+            if (escenario.Objetos.Count == 0){
+                CrearEscenarioVacio(nombreArchivo);
+            }
 
             _escenarios[nombreArchivo] = escenario;
             _escenarioActual = escenario;
