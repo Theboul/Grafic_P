@@ -4,7 +4,7 @@ using OpenTK.Mathematics;
 
 namespace OpenTKCubo3D
 {
-    public class Utilidades(){
+    public class Utilidades{
 
         private static readonly JsonSerializerOptions _opcionesJson = new()
         {

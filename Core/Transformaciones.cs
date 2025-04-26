@@ -3,7 +3,7 @@ using OpenTK.Mathematics;
 
 namespace OpenTKCubo3D
 {
-    public class Transformaciones(){
+    public class Transformaciones{
         [JsonIgnore]
         public Vector3 Position { get; set; } = Vector3.Zero;
         [JsonIgnore]
