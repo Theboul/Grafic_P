@@ -27,14 +27,12 @@ namespace OpenTKCubo3D
             centroDeMasa = CalcularCentro();
         }
 
-        public void Dibujar(Matrix4 matrizPadre){
-             
+        public void Dibujar(Matrix4 matrizPadre){ 
             Matrix4 matrizLocal = Transform.GetMatrix(centroDeMasa);
             Matrix4 matrizAcumulada = matrizLocal * matrizPadre;
             foreach (Caras caras in Caras.Values){
                 caras.Dibujar(matrizAcumulada);
-            }
-            
+            } 
         }
         
         public Vector3 CalcularCentro()
@@ -68,6 +66,5 @@ namespace OpenTKCubo3D
         {
             Transform.Transladate(dx, dy, dz);
         }
-
     }
 }

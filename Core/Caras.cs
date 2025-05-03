@@ -35,9 +35,15 @@ namespace OpenTKCubo3D
 
             Matrix4 matrizLocal = Transform.GetMatrix(centroDeMasa);
             Matrix4 matrizFinal = matrizLocal * matrizAcumulada;
-
-
-           PrimitiveType tipoPrimitiva = PrimitiveType.Quads;
+            
+            PrimitiveType tipoPrimitiva = Vertices.Count switch
+            {
+              2 => PrimitiveType.LineLoop,
+              3 => PrimitiveType.Triangles,
+              4 => PrimitiveType.Quads,
+              _ => PrimitiveType.Polygon
+            };
+           //PrimitiveType tipoPrimitiva = PrimitiveType.LineLoop;
            GL.Begin(tipoPrimitiva);
            GL.Color4(Color);
            foreach (var vert in Vertices)

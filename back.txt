@@ -1,0 +1,101 @@
+GestorEscenarios.CrearEscenarioVacio("Pista");
+
+            
+            //auto.Transladar(0f, 5f, 0f);
+            
+           var terreno = new Figura(new Puntos(0f, -0.1f, 0f), 30f, 0.2f, 30f, Color4.ForestGreen);
+            GestorEscenarios.EscenarioActual.AgregarObjeto("base_pasto", new ObjetoU { Partes = { { "terreno", terreno } } });
+            
+            var terreno1 = new Figura(new Puntos(0f, -0.1f, 0f), -30f, 0.2f, 30f, Color4.ForestGreen);
+            GestorEscenarios.EscenarioActual.AgregarObjeto("base_pasto2", new ObjetoU { Partes = { { "terreno1", terreno1 } } });
+
+            var terreno2 = new Figura(new Puntos(0f, -0.1f, 0f), -30f, 0.2f, -30, Color4.ForestGreen);
+            GestorEscenarios.EscenarioActual.AgregarObjeto("base_pasto3", new ObjetoU { Partes = { { "terreno2", terreno2 } } });
+
+            var terreno3 = new Figura(new Puntos(0f, -0.1f, 0f), 30f, 0.2f, -30, Color4.ForestGreen);
+            GestorEscenarios.EscenarioActual.AgregarObjeto("base_pasto4", new ObjetoU { Partes = { { "terreno3", terreno3 } } });
+           
+           // --- Camino Recto Inicial ---
+            var tramoInicial = new Figura(new Puntos(-2f, 0f, -1.5f), 3.5f, 0.2f, 12f, Color4.Gray);
+            GestorEscenarios.EscenarioActual.AgregarObjeto("tramo_inicial", new ObjetoU { Partes = { { "tramo1", tramoInicial } } });
+
+            // --- Camino Recto final ---
+            var tramoFinal = new Figura(new Puntos(-17.1f, 0f, -1.5f), 3.5f, 0.2f, 12f, Color4.Gray);
+            GestorEscenarios.EscenarioActual.AgregarObjeto("tramo_final", new ObjetoU { Partes = { { "tramo2", tramoFinal } } });
+
+            // --- Camino Recto en Medio de Curva ---
+            var tramoMedio = new Figura(new Puntos(-10.5f, 0f, 17f), 6f, 0.2f, 3.2f, Color4.Gray);
+            GestorEscenarios.EscenarioActual.AgregarObjeto("tramo_medio", new ObjetoU { Partes = { { "tramo3", tramoMedio } } });
+
+            // --- Curva (cuarto de círculo) ---
+            var curvaIzquierda = ModeloU.GenerarCurva(new Puntos(-7f, 0f, 7f), 1.5f, 0.2f, 11.5f, Color4.Gray);
+            var curva = new ObjetoU();
+            foreach (var kv in curvaIzquierda)
+            {
+                curva.Partes.Add(kv.Key, kv.Value);
+            }
+            GestorEscenarios.EscenarioActual.AgregarObjeto("curva_1", curva);
+
+
+            var curvaDerecha = ModeloU.GenerarCurva(new Puntos(-10f, 0f, 7f), 1.5f, 0.2f, 11.5f, Color4.Gray,true);
+            var curva2 = new ObjetoU();
+            foreach (var kv1 in curvaDerecha)
+            {
+                curva2.Partes.Add(kv1.Key, kv1.Value);
+            }
+            GestorEscenarios.EscenarioActual.AgregarObjeto("curva_2", curva2);
+
+
+            var nuevoObjeto = new ObjetoU( new Puntos(4.0f, 1.0f, -3.0f), 2.0f, 3.0f, 0.3f, Color4.Purple);
+            var nuevoObjeto1 = new ObjetoU( new Puntos(0.0f, 1.0f, -3.0f), 2.0f, 3.0f, 0.3f, Color4.SkyBlue);
+            var nuevoObjeto2 = new ObjetoU( new Puntos(-4.0f, 1.0f, -3.0f), 2.0f, 3.0f, 0.3f, Color4.Orange);
+            GestorEscenarios.EscenarioActual.AgregarObjeto("u1_morado", nuevoObjeto);
+            GestorEscenarios.EscenarioActual.AgregarObjeto("u2_celeste", nuevoObjeto1);
+            GestorEscenarios.EscenarioActual.AgregarObjeto("u3_naranja", nuevoObjeto2);    
+
+
+            var objetos1 = LectorModeloObj.CargarObjetoDesdeObj("Core/auto3/Lowpoly_tree_sample.obj");
+            var objetoArbol = objetos1.Values.First();
+            objetoArbol.Transform.Position = new Vector3(-7f, 0.2f, 10f);
+            GestorEscenarios.EscenarioActual.AgregarObjeto("arbol", objetoArbol);
+
+            // --- Recalcular el centro de masa general ---
+            GestorEscenarios.EscenarioActual.RecalcularCentroDeMasa();
+
+
+            
+            var objetos = LectorModeloObj.CargarObjetoDesdeObj("Core/auto3/untitled.obj");
+            foreach (var (nombre, objeto) in objetos)
+            {
+                GestorEscenarios.EscenarioActual.AgregarObjeto(nombre, objeto);
+            }
+
+            GestorEscenarios.Guardar("Pista");
+
+            if (GestorEscenarios.EscenarioActual.Objetos.TryGetValue("auto", out var auto))
+            {
+                auto.RecalcularCentroDeMasa();
+                auto.Transform.Position = new Vector3(-0.5f, 0.2f, 0f); 
+                _rutaBase = RutaAuto.ObtenerRuta();
+                _ruta = SplineGenerator.GenerarRutaSuavizada(_rutaBase, pasosPorTramo: 15);
+                _animacionAuto = new AnimacionAutoConGiro(auto, _ruta, velocidad: 6f);
+                _animacionAuto.Activa = true;
+            }
+
+
+            private void DibujarRuta(List<Vector3> puntos)
+        {
+            GL.LineWidth(3f);
+            GL.Begin(PrimitiveType.LineStrip);
+            GL.Color3(1f, 1f, 0f); // Amarillo
+
+            foreach (var punto in puntos)
+            {
+                GL.Vertex3(punto);
+            }
+
+            GL.End();
+            GL.LineWidth(1f); // restaurar grosor original
+        }
+
+        if (_ruta != null && _ruta.Count > 1) DibujarRuta(_ruta);

@@ -93,42 +93,66 @@ namespace OpenTKCubo3D
             return partes;
         }
 
-        /*public static void DibujarEjes()
+        public static Dictionary<string, Figura> GenerarCurva(
+            Puntos centro, float ancho, float alto, float profundidad, Color4 color, bool curvaDerecha = false)
         {
-            Matrix4 identidad = Matrix4.Identity;
-            //Rojo
-            new Caras(
-                new Dictionary<string, Puntos>
-                {
-                    ["inicioX"] = new Puntos(-2.0f, 0, 0),
-                    ["finX"] = new Puntos(2.0f, 0, 0)
-                },
-                Puntos.Zero,
-                Color4.Red
-            ).Dibujar(identidad);
+            var partes = new Dictionary<string, Figura>();
 
-            // Verde
-            new Caras(
-                new Dictionary<string, Puntos>
-                {
-                    ["inicioY"] = new Puntos(0, -2.0f, 0),
-                    ["finY"] = new Puntos(0, 2.0f, 0)
-                },
-                Puntos.Zero,
-                Color4.Green
-            ).Dibujar(identidad);
+            int cantidadCubos = 30;
+            float radio = 5f;
+            float separacion = MathHelper.PiOver2 / cantidadCubos;
+            float factorSolape = 0.95f;
 
-            // Azul
-            new Caras(
-                new Dictionary<string, Puntos>
-                {
-                    ["inicioZ"] = new Puntos(0, 0, -2.0f),
-                    ["finZ"] = new Puntos(0, 0, 2.0f)
-                },
-                Puntos.Zero,
-                Color4.Blue
-            ).Dibujar(identidad);
-        }*/
+            for (int i = 0; i < cantidadCubos; i++)
+            {
+                float angulo = separacion * i;
+
+                float x = (float)Math.Cos(angulo) * radio;
+                float z = (float)Math.Sin(angulo) * radio;
+
+                if (curvaDerecha)
+                    x = -x; 
+
+                var origen = new Puntos(centro.X + x, centro.Y, centro.Z + z);
+                var figura = new Figura(origen, ancho * factorSolape, alto, profundidad * factorSolape, color);
+
+                float rotacionGrados = MathHelper.RadiansToDegrees(angulo);
+                figura.Transform.Rotation = new Vector3(0, curvaDerecha ? rotacionGrados : -rotacionGrados, 0);
+
+                partes.Add($"curva_{(curvaDerecha ? "der" : "izq")}_{i}", figura);
+            }
+
+            return partes;
+        }
+
+        public static Dictionary<string, Figura> GenerarCurvaSimple(
+        Puntos centro, float ancho, float alto, float profundidad, Color4 color, bool curvaDerecha = false)
+        {
+            var partes = new Dictionary<string, Figura>();
+
+            int cantidadCubos = 30;
+            float radio = 6f;
+            float separacion = MathHelper.PiOver2 / cantidadCubos;
+
+            for (int i = 0; i < cantidadCubos; i++)
+            {
+                float angulo = separacion * i;
+
+                float x = (float)Math.Cos(angulo) * radio;
+                float z = (float)Math.Sin(angulo) * radio;
+
+                if (curvaDerecha)
+                    x = -x;
+
+                var origen = new Puntos(centro.X + x, centro.Y, centro.Z + z);
+
+                var figura = new Figura(origen, ancho, alto, profundidad, color);
+
+                partes.Add($"curva_simple_{(curvaDerecha ? "der" : "izq")}_{i}", figura);
+            }
+
+            return partes;
+        }
 
         public static void DibujarEjes()
         {
@@ -136,24 +160,24 @@ namespace OpenTKCubo3D
 
             // Eje X en rojo
             GL.Color3(1f, 0f, 0f); 
-            GL.Vertex3(-2f, 0f, 0f); 
+            GL.Vertex3(-20f, 0f, 0f); 
             GL.Vertex3(0f, 0f, 0f);
             GL.Vertex3(0f, 0f, 0f); 
-            GL.Vertex3(2f, 0f, 0f);
+            GL.Vertex3(20f, 0f, 0f);
 
             // Eje Y en verde
             GL.Color3(0f, 1f, 0f);
-            GL.Vertex3(0f, -2f, 0f); 
+            GL.Vertex3(0f, -20f, 0f); 
             GL.Vertex3(0f, 0f, 0f);
             GL.Vertex3(0f, 0f, 0f);  
-            GL.Vertex3(0f, 2f, 0f);
+            GL.Vertex3(0f, 20f, 0f);
 
             // Eje Z en azul
             GL.Color3(0f, 0f, 1f);
-            GL.Vertex3(0f, 0f, -2f); 
+            GL.Vertex3(0f, 0f, -20f); 
             GL.Vertex3(0f, 0f, 0f);
             GL.Vertex3(0f, 0f, 0f);  
-            GL.Vertex3(0f, 0f, 2f);
+            GL.Vertex3(0f, 0f, 20f);
 
             GL.End();
         }

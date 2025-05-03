@@ -33,7 +33,6 @@ namespace OpenTKCubo3D
             foreach (var figura in Partes.Values){
                 figura.Dibujar(matrizAcumulada);
             }
-            
         }
 
         public Vector3 CalcularCentro()
