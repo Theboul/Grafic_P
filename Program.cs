@@ -22,14 +22,7 @@ namespace OpenTKCubo3D
         private float _pitch = 0f;
         private float _rotSpeed = 50f;
         private float _cameraSpeed = 10f;
-        private bool _espacioPresionado = false;
-        private AnimacionAutoConGiro? _animacionAuto;
-        private List<Vector3> _rutaBase = new(); // lista original
-
-        private List<Vector3> _ruta = new();
-
-
-
+  
        
         public Program(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings)
             : base(gameWindowSettings, nativeWindowSettings)
@@ -47,11 +40,10 @@ namespace OpenTKCubo3D
             //GL.CullFace(TriangleFace.Back);             
             GL.FrontFace(FrontFaceDirection.Ccw);  
 
-            GestorEscenarios.Cargar("Pista_1");
+            GestorEscenarios.Cargar("objeto_Animado");
             //GestorEscenarios.CrearEscenarioVacio("Pista2");
 
-
-            if(GestorEscenarios.EscenarioActual.Objetos.TryGetValue("arbol", out var objetoArbol)){
+            /*if(GestorEscenarios.EscenarioActual.Objetos.TryGetValue("arbol", out var objetoArbol)){
                 objetoArbol.RecalcularCentroDeMasa();
                 objetoArbol.Transform.Position = new Vector3(-7f, 0.2f, 10f);
             }
@@ -61,13 +53,10 @@ namespace OpenTKCubo3D
                 auto.RecalcularCentroDeMasa();
                 auto.Transform.Position = new Vector3(-0.5f, 0.2f, 0f); 
                 _rutaBase = RutaAuto.ObtenerRuta();
-                _ruta = SplineGenerator.GenerarRutaSuavizada(_rutaBase, pasosPorTramo: 15);
-                _animacionAuto = new AnimacionAutoConGiro(auto, _ruta, velocidad: 2f);
-                _animacionAuto.Activa = false;
-            }
+            }*/
 
-            /*
-            GestorEscenarios.CrearEscenarioVacio("objetos_U1");
+            
+            /*GestorEscenarios.CrearEscenarioVacio("objeto_Animado");
             var nuevoObjeto = new ObjetoU( new Puntos(0.0f, 0.0f, -2.0f), 1.0f, 1.0f, 0.3f, Color4.Purple);
             var nuevoObjeto1 = new ObjetoU( new Puntos(0.0f, 0.0f, 0.0f), 1.0f, 1.0f, 0.3f, Color4.SkyBlue);
             var nuevoObjeto2 = new ObjetoU( new Puntos(0.0f, 1.0f, -1.0f), 1.0f, 1.0f, 0.3f, Color4.Orange);
@@ -75,9 +64,44 @@ namespace OpenTKCubo3D
             GestorEscenarios.EscenarioActual.AgregarObjeto("u2_celeste", nuevoObjeto1);
             GestorEscenarios.EscenarioActual.AgregarObjeto("u3_naranja", nuevoObjeto2);
             GestorEscenarios.EscenarioActual.RecalcularCentroDeMasa();
-            GestorEscenarios.Guardar("objetos_U1");
-            GestorEscenarios._escenarios["objetos_U1"].Objetos.Add("u1_5", objetoNuevo3);
+            GestorEscenarios.Guardar("objeto_Animado");
+            //GestorEscenarios._escenarios["objetos_U1"].Objetos.Add("u1_5", objetoNuevo3);
             */
+
+             // === Animación para "u1_morado" (empieza a los 0 segundos) ===
+            if (GestorEscenarios.EscenarioActual.Objetos.TryGetValue("u1_morado", out var objetoMorado))
+            {
+                var libreto1 = new LibretoAnimacion(); // ya incluye keyframes por defecto
+                var animacion1 = new AnimacionObjeto(objetoMorado, libreto1);
+                GestorAnimaciones.Agregar(animacion1);
+            }
+
+            // === Animación para "u2_celeste" (empieza a los 5 segundos) ===
+            if (GestorEscenarios.EscenarioActual.Objetos.TryGetValue("u2_celeste", out var objetoCeleste))
+            {
+                var libreto2 = new LibretoAnimacion();
+                libreto2.Keyframes.Clear(); // eliminar keyframes por defecto
+
+                libreto2.AgregarKeyframe(new KeyframeTransformacion(
+                    0f, new Vector3(0f, 0f, 0f), Vector3.Zero, Vector3.One));
+
+                libreto2.AgregarKeyframe(new KeyframeTransformacion(
+                    5f, new Vector3(0f, 0f, 0f), Vector3.Zero, Vector3.One));
+
+                libreto2.AgregarKeyframe(new KeyframeTransformacion(
+                    10f, new Vector3(5f, 0f, 0f), Vector3.Zero, Vector3.One));
+
+                var animacion2 = new AnimacionObjeto(objetoCeleste, libreto2);
+                GestorAnimaciones.Agregar(animacion2);
+            }
+
+            /*if (GestorEscenarios.EscenarioActual.Objetos.TryGetValue("u1_morado", out var objetoMorado))
+            {
+                var libreto = Utilidades.Cargar<LibretoAnimacion>("animaciones", "u1_morado"); // CORRECTO
+
+                var animacion = new AnimacionObjeto(objetoMorado, libreto);
+                GestorAnimaciones.Agregar(animacion);
+            }*/
             
             panel = new PanelTransformaciones(GestorEscenarios.EscenarioActual);
            _imgui = new ImGuiController(this);
@@ -170,23 +194,20 @@ namespace OpenTKCubo3D
                 _cameraPosition -= _cameraUp * _cameraSpeed * deltaTime;
 
             
-            bool estaPresionandoEspacio = input.IsKeyDown(Keys.Space);
-
-            if (estaPresionandoEspacio && !_espacioPresionado)
+            //bool estaPresionandoEspacio = input.IsKeyDown(Keys.Space);
+            GestorAnimaciones.ActualizarTodo((float)args.Time);
+            /*if (estaPresionandoEspacio && !_espacioPresionado)
             {
                 if (_animacionAuto != null)
                 {
                     _animacionAuto.Activa = !_animacionAuto.Activa;
                     Console.WriteLine(_animacionAuto.Activa ? " Animación activada" : " Animación detenida");
                 }
-            }
-
-            _espacioPresionado = estaPresionandoEspacio;
+            }*/
 
             //_animacionAuto?.Actualizar(deltaTime);
-            _animacionAuto?.Actualizar((float)args.Time);
-
         }
+
         protected override void OnResize(ResizeEventArgs e)
         {
             base.OnResize(e);
