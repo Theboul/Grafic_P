@@ -22,8 +22,6 @@ namespace OpenTKCubo3D
         public EstadoTransformacionInicial EstadoInicial { get; set; } = new();
         public LibretoKeyframes Libreto { get; set; } = new();
 
-
-        /// Indica si la acción ya terminó y no debe ser procesada más.
         public bool Finalizada { get; private set; } = false;
 
         public void MarcarFinalizada()
@@ -36,19 +34,11 @@ namespace OpenTKCubo3D
             if (GestorEscenarios.EscenarioActual.Objetos.TryGetValue(NombreObjeto, out var objeto))
             {
                 var frame = Libreto.Interpolar(tiempoLocal);
-
-                // La posición es relativa al EstadoInicial
                 objeto.Transform.Position = EstadoInicial.Posicion + frame.Posicion;
-
-                // La rotación debe acumular (EstadoInicial * interpolación)
                 objeto.Transform.Rotation = EstadoInicial.Rotacion * frame.Rotacion;
-
-                // Escala multiplicativa
                 objeto.Transform.Scale = EstadoInicial.Escala * frame.Escala;
             }
         }
-
-
 
         public void AplicaUltimoEstado()
         {
