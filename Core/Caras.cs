@@ -11,7 +11,7 @@ namespace OpenTKCubo3D
         public Puntos? Origen { get; set; } = new();
         public Color4 Color { get; set; } = Color4.White;
         
-        public Transformaciones Transform { get; } = new Transformaciones();
+        public Transformaciones Transform { get; set; } = new Transformaciones();
         [JsonIgnore]
         public Vector3 centroDeMasa { get; set; }
         [JsonPropertyName("centroDeMasa")]

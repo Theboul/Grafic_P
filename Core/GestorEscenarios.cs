@@ -1,5 +1,4 @@
-
-
+using OpenTK.Mathematics;
 namespace OpenTKCubo3D{
     public static class GestorEscenarios
     {
@@ -11,14 +10,43 @@ namespace OpenTKCubo3D{
         public static void Cargar(string nombreArchivo)
         {
             var escenario = Utilidades.Cargar<Escenario>("escenarios", nombreArchivo);
-            
-            if (escenario.Objetos.Count == 0){
+
+            if (escenario.Objetos.Count == 0)
+            {
                 CrearEscenarioVacio(nombreArchivo);
             }
 
             _escenarios[nombreArchivo] = escenario;
             _escenarioActual = escenario;
         }
+
+        public static void AgregarArchObj(string nombre, string ruta, Vector3? posicion = null, float? escala = null)
+        {
+            var objetos = LectorModeloObj.CargarObjetoDesdeObj(ruta);
+
+            if (objetos.Count > 0)
+            {
+                var objeto = objetos.Values.First(); // Da igual como se llame internamente
+
+                // Aplicar transformaciones si se pide
+                if (escala.HasValue)
+                    objeto.Transform.Escalate(escala.Value);
+
+                if (posicion.HasValue)
+                    objeto.Transform.Position = posicion.Value;
+
+                objeto.RecalcularCentroDeMasa();
+
+                // Aquí lo guardas en tu escenario con el nombre que TÚ quieres
+                GestorEscenarios.EscenarioActual.AgregarObjeto(nombre, objeto);
+
+            }
+            else
+            {
+                Console.WriteLine($"❗ No se encontraron objetos en el archivo: {ruta}");
+            }
+        }
+
 
         public static void Guardar(string nombreArchivo)
         {
@@ -28,7 +56,7 @@ namespace OpenTKCubo3D{
 
         public static void CrearEscenarioVacio(string nombreArchivo)
         {
-            var nuevo = new Escenario(); 
+            var nuevo = new Escenario();
             _escenarios[nombreArchivo] = nuevo;
             _escenarioActual = nuevo;
         }
@@ -52,6 +80,12 @@ namespace OpenTKCubo3D{
         {
             return Utilidades.Cargar<T>(carpeta, nombreArchivo);
         }
-
+        
+        public static Dictionary<string, ObjetoU> BuscarObjetosPorPrefijo(string prefijo)
+        {
+            return EscenarioActual.Objetos
+                .Where(kv => kv.Key.StartsWith(prefijo, StringComparison.OrdinalIgnoreCase))
+                .ToDictionary(kv => kv.Key, kv => kv.Value);
+        }
     } 
 }

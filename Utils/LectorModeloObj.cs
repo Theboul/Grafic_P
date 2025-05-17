@@ -10,7 +10,7 @@ namespace OpenTKCubo3D
             var objetos = new Dictionary<string, ObjetoU>();
             var materiales = CargarMateriales(Path.ChangeExtension(rutaObj, ".mtl"));
 
-            List<Vector3> vertices = new();
+            var vertices = new List<Vector3>();
             string objetoActual = "default";
             string grupoActual = "Figura_0";
             string materialActual = "default";
@@ -29,23 +29,18 @@ namespace OpenTKCubo3D
                         break;
                     case "o":
                         objetoActual = partes.Length > 1 ? partes[1] : $"objeto_{objetos.Count}";
-                        if (!carasPorObjeto.ContainsKey(objetoActual))
-                            carasPorObjeto[objetoActual] = new();
-                        grupoActual = "Figura_0"; // reiniciar grupo
+                        carasPorObjeto.TryAdd(objetoActual, new());
+                        grupoActual = "Figura_0";
                         break;
                     case "g":
                         grupoActual = partes.Length > 1 ? partes[1] : $"Figura_{Guid.NewGuid()}";
                         break;
                     case "usemtl":
-                        if (partes.Length > 1)
-                            materialActual = partes[1];
+                        materialActual = partes.Length > 1 ? partes[1] : materialActual;
                         break;
                     case "f":
-                        if (!carasPorObjeto.ContainsKey(objetoActual))
-                            carasPorObjeto[objetoActual] = new();
-                        if (!carasPorObjeto[objetoActual].ContainsKey(grupoActual))
-                            carasPorObjeto[objetoActual][grupoActual] = new();
-
+                        carasPorObjeto.TryAdd(objetoActual, new());
+                        carasPorObjeto[objetoActual].TryAdd(grupoActual, new());
                         carasPorObjeto[objetoActual][grupoActual].Add(new CaraTemp
                         {
                             IndicesVertices = ParseCaraIndices(partes),
@@ -105,10 +100,9 @@ namespace OpenTKCubo3D
                     cara.Vertices[$"v{i}"] = new Puntos(v.X, v.Y, v.Z);
                 }
 
-                if (materiales.TryGetValue(caraTemp.MaterialUsado, out var mat))
-                    cara.Color = new Color4(mat.ColorDifuso.X, mat.ColorDifuso.Y, mat.ColorDifuso.Z, 1.0f);
-                else
-                    cara.Color = colorDefault;
+                cara.Color = materiales.TryGetValue(caraTemp.MaterialUsado, out var mat)
+                    ? new Color4(mat.ColorDifuso.X, mat.ColorDifuso.Y, mat.ColorDifuso.Z, 1.0f)
+                    : colorDefault;
 
                 cara.RecalcularCentroDeMasa();
                 caras.Add(cara);
@@ -146,9 +140,9 @@ namespace OpenTKCubo3D
                         {
                             var c = ParseVector3(partes);
                             materialActual.ColorDifuso = new Vector3(
-                                Math.Clamp(c.X, 0, 1),
-                                Math.Clamp(c.Y, 0, 1),
-                                Math.Clamp(c.Z, 0, 1));
+                                Math.Clamp(c.X, 0f, 1f),
+                                Math.Clamp(c.Y, 0f, 1f),
+                                Math.Clamp(c.Z, 0f, 1f));
                         }
                         break;
                 }

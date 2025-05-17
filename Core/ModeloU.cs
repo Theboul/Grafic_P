@@ -98,7 +98,7 @@ namespace OpenTKCubo3D
         {
             var partes = new Dictionary<string, Figura>();
 
-            int cantidadCubos = 30;
+            int cantidadCubos = 40;
             float radio = 5f;
             float separacion = MathHelper.PiOver2 / cantidadCubos;
             float factorSolape = 0.95f;
@@ -116,8 +116,12 @@ namespace OpenTKCubo3D
                 var origen = new Puntos(centro.X + x, centro.Y, centro.Z + z);
                 var figura = new Figura(origen, ancho * factorSolape, alto, profundidad * factorSolape, color);
 
+                // Aquí debes crear primero rotacionGrados en grados:
                 float rotacionGrados = MathHelper.RadiansToDegrees(angulo);
-                figura.Transform.Rotation = new Vector3(0, curvaDerecha ? rotacionGrados : -rotacionGrados, 0);
+
+                // Y convertirlo a Quaternion correctamente:
+                figura.Transform.Rotation = Quaternion.FromEulerAngles(0, MathHelper.DegreesToRadians(curvaDerecha ? rotacionGrados : -rotacionGrados), 0);
+
 
                 partes.Add($"curva_{(curvaDerecha ? "der" : "izq")}_{i}", figura);
             }

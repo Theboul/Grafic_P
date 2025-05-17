@@ -1,9 +1,4 @@
-GestorEscenarios.CrearEscenarioVacio("Pista");
-
-            
-            //auto.Transladar(0f, 5f, 0f);
-            
-           var terreno = new Figura(new Puntos(0f, -0.1f, 0f), 30f, 0.2f, 30f, Color4.ForestGreen);
+/*var terreno = new Figura(new Puntos(0f, -0.1f, 0f), 30f, 0.2f, 30f, Color4.ForestGreen);
             GestorEscenarios.EscenarioActual.AgregarObjeto("base_pasto", new ObjetoU { Partes = { { "terreno", terreno } } });
             
             var terreno1 = new Figura(new Puntos(0f, -0.1f, 0f), -30f, 0.2f, 30f, Color4.ForestGreen);
@@ -16,15 +11,15 @@ GestorEscenarios.CrearEscenarioVacio("Pista");
             GestorEscenarios.EscenarioActual.AgregarObjeto("base_pasto4", new ObjetoU { Partes = { { "terreno3", terreno3 } } });
            
            // --- Camino Recto Inicial ---
-            var tramoInicial = new Figura(new Puntos(-2f, 0f, -1.5f), 3.5f, 0.2f, 12f, Color4.Gray);
+            var tramoInicial = new Figura(new Puntos(-2f, 0f, -1.5f), 3.5f, 0.2f, 14f, Color4.Gray);
             GestorEscenarios.EscenarioActual.AgregarObjeto("tramo_inicial", new ObjetoU { Partes = { { "tramo1", tramoInicial } } });
 
             // --- Camino Recto final ---
-            var tramoFinal = new Figura(new Puntos(-17.1f, 0f, -1.5f), 3.5f, 0.2f, 12f, Color4.Gray);
+            var tramoFinal = new Figura(new Puntos(-17.1f, 0f, -1.5f), 3.5f, 0.2f, 14f, Color4.Gray);
             GestorEscenarios.EscenarioActual.AgregarObjeto("tramo_final", new ObjetoU { Partes = { { "tramo2", tramoFinal } } });
 
             // --- Camino Recto en Medio de Curva ---
-            var tramoMedio = new Figura(new Puntos(-10.5f, 0f, 17f), 6f, 0.2f, 3.2f, Color4.Gray);
+            var tramoMedio = new Figura(new Puntos(-10f, 0f, 20f), 4.5f, 0.2f, 0.30f, Color4.Gray);
             GestorEscenarios.EscenarioActual.AgregarObjeto("tramo_medio", new ObjetoU { Partes = { { "tramo3", tramoMedio } } });
 
             // --- Curva (cuarto de círculo) ---
@@ -46,56 +41,221 @@ GestorEscenarios.CrearEscenarioVacio("Pista");
             GestorEscenarios.EscenarioActual.AgregarObjeto("curva_2", curva2);
 
 
-            var nuevoObjeto = new ObjetoU( new Puntos(4.0f, 1.0f, -3.0f), 2.0f, 3.0f, 0.3f, Color4.Purple);
-            var nuevoObjeto1 = new ObjetoU( new Puntos(0.0f, 1.0f, -3.0f), 2.0f, 3.0f, 0.3f, Color4.SkyBlue);
-            var nuevoObjeto2 = new ObjetoU( new Puntos(-4.0f, 1.0f, -3.0f), 2.0f, 3.0f, 0.3f, Color4.Orange);
+            var nuevoObjeto = new ObjetoU( new Puntos(7.0f, 1.5f, -3.0f), 2.0f, 2.0f, 0.3f, Color4.Purple);
+            var nuevoObjeto1 = new ObjetoU( new Puntos(-0.4f, 4f, -3.0f), 2.0f, 2.0f, 0.3f, Color4.DarkGray);
+            var nuevoObjeto2 = new ObjetoU( new Puntos(-0.4f, 9.0f, -3.0f), 2.0f, 2.0f, 0.3f, Color4.Gold);
             GestorEscenarios.EscenarioActual.AgregarObjeto("u1_morado", nuevoObjeto);
-            GestorEscenarios.EscenarioActual.AgregarObjeto("u2_celeste", nuevoObjeto1);
-            GestorEscenarios.EscenarioActual.AgregarObjeto("u3_naranja", nuevoObjeto2);    
 
+            GestorEscenarios.EscenarioActual.AgregarObjeto("u2_darkGray", nuevoObjeto1);
+            GestorEscenarios.EscenarioActual.Objetos["u2_darkGray"].Transform.Rotate(180f, 0f, 0f);
+            GestorEscenarios.EscenarioActual.Objetos["u2_darkGray"].Transform.Escalate(4f);
 
-            var objetos1 = LectorModeloObj.CargarObjetoDesdeObj("Core/auto3/Lowpoly_tree_sample.obj");
-            var objetoArbol = objetos1.Values.First();
-            objetoArbol.Transform.Position = new Vector3(-7f, 0.2f, 10f);
-            GestorEscenarios.EscenarioActual.AgregarObjeto("arbol", objetoArbol);
+            GestorEscenarios.EscenarioActual.AgregarObjeto("u3_gold", nuevoObjeto2);
 
-            // --- Recalcular el centro de masa general ---
-            GestorEscenarios.EscenarioActual.RecalcularCentroDeMasa();
+            //arboles
+            GestorEscenarios.AgregarArchObj("arbol_1", "Core/objetosObj/arbolObj/Tree/Tree_3.obj", new Vector3(-7f, 0.1f, 10f));
+            GestorEscenarios.AgregarArchObj("Hojas_a1", "Core/objetosObj/arbolObj/Leaves_pile/Leaves_pile_3.obj", new Vector3(-7f, 0.1f, 10f));
+            GestorEscenarios.AgregarArchObj("arbol_2", "Core/objetosObj/arbolObj/Tree/Tree_3.obj", new Vector3(-7f, 0.1f, -10f));
+            GestorEscenarios.AgregarArchObj("arbol_3", "Core/objetosObj/arbolObj/Tree/Tree_3.obj", new Vector3(-20f, 0.1f, 0f));
 
-
+            GestorEscenarios.AgregarArchObj("arbol_4", "Core/objetosObj/arbolObj/Tree/Tree_2.obj", new Vector3(-23f, 0.1f, 15f));
+            GestorEscenarios.AgregarArchObj("Hojas_a4", "Core/objetosObj/arbolObj/Leaves_pile/Leaves_pile_2.obj", new Vector3(-23f, 0.1f, 15f));
+            GestorEscenarios.AgregarArchObj("rama_a4", "Core/objetosObj/arbolObj/Log/Log_2.obj", new Vector3(-20f, 0.1f, 15f));
             
-            var objetos = LectorModeloObj.CargarObjetoDesdeObj("Core/auto3/untitled.obj");
+            GestorEscenarios.AgregarArchObj("arbol_5", "Core/objetosObj/arbolObj/Tree/Tree_2.obj", new Vector3(2f, 0.1f, 23f));
+            GestorEscenarios.AgregarArchObj("Hojas_a5", "Core/objetosObj/arbolObj/Leaves_pile/Leaves_pile_2.obj", new Vector3(2f, 0.1f, 23f));
+
+            GestorEscenarios.AgregarArchObj("arbol_6", "Core/objetosObj/arbolObj/Tree/Tree_1.obj", new Vector3(4f, 0.1f, 7f));
+            GestorEscenarios.AgregarArchObj("Hojas_a6", "Core/objetosObj/arbolObj/Leaves_pile/Leaves_pile_1.obj", new Vector3(4f, 0.1f, 7f));
+
+            GestorEscenarios.AgregarArchObj("rama_1", "Core/objetosObj/arbolObj/Log/Log_2.obj", new Vector3(-12.5f, 0.1f, 22.5f));
+            GestorEscenarios.EscenarioActual.Objetos["rama_1"].Transform.Rotate(0f, 40f, 0f);
+
+            GestorEscenarios.AgregarArchObj("rama_2", "Core/objetosObj/arbolObj/Log/Log_1.obj", new Vector3(7f, 0.1f, 22f));
+            GestorEscenarios.EscenarioActual.Objetos["rama_2"].Transform.Rotate(0f, 195f, 0f);
+
+            GestorEscenarios.AgregarArchObj("rama_3", "Core/objetosObj/arbolObj/Log/Log_2.obj", new Vector3(11f, 0.1f, 9f));
+            GestorEscenarios.EscenarioActual.Objetos["rama_3"].Transform.Rotate(0f, 20f, 0f);
+
+            GestorEscenarios.AgregarArchObj("rama_4", "Core/objetosObj/arbolObj/Log/Log_3.obj", new Vector3(-20f, 0.1f, 5.5f));
+            GestorEscenarios.EscenarioActual.Objetos["rama_4"].Transform.Rotate(0f, 50f, 0f);
+
+            GestorEscenarios.AgregarArchObj("rama_5", "Core/objetosObj/arbolObj/Log/Log_3.obj", new Vector3(3f, 0.1f, 0f));
+            GestorEscenarios.EscenarioActual.Objetos["rama_5"].Transform.Rotate(0f, 15f, 0f);
+
+            GestorEscenarios.AgregarArchObj("tronco_1", "Core/objetosObj/arbolObj/Log/Log_5.obj", new Vector3(-7f, 0.1f, 15f));
+            if (GestorEscenarios.EscenarioActual.Objetos.TryGetValue("tronco_1", out var tronco1))
+            {
+                tronco1.Transform.Rotate(0f, 90f, 0f);
+            }
+
+            GestorEscenarios.AgregarArchObj("tocon_1", "Core/objetosObj/arbolObj/Stump/Stump_3.obj", new Vector3(-7f, 0.1f, 23f));
+
+
+            var objetos = LectorModeloObj.CargarObjetoDesdeObj("Core/objetosObj/autoObj/untitled.obj");
             foreach (var (nombre, objeto) in objetos)
             {
                 GestorEscenarios.EscenarioActual.AgregarObjeto(nombre, objeto);
             }
 
-            GestorEscenarios.Guardar("Pista");
-
             if (GestorEscenarios.EscenarioActual.Objetos.TryGetValue("auto", out var auto))
             {
+                auto.Transform.Position = new Vector3(-0.5f, 0.2f, 0f);
                 auto.RecalcularCentroDeMasa();
-                auto.Transform.Position = new Vector3(-0.5f, 0.2f, 0f); 
-                _rutaBase = RutaAuto.ObtenerRuta();
-                _ruta = SplineGenerator.GenerarRutaSuavizada(_rutaBase, pasosPorTramo: 15);
-                _animacionAuto = new AnimacionAutoConGiro(auto, _ruta, velocidad: 6f);
-                _animacionAuto.Activa = true;
             }
 
 
-            private void DibujarRuta(List<Vector3> puntos)
-        {
-            GL.LineWidth(3f);
-            GL.Begin(PrimitiveType.LineStrip);
-            GL.Color3(1f, 1f, 0f); // Amarillo
+            // --- Recalcular el centro de masa general ---
+            GestorEscenarios.EscenarioActual.RecalcularCentroDeMasa();
 
-            foreach (var punto in puntos)
-            {
-                GL.Vertex3(punto);
-            }
+            GestorEscenarios.Guardar("Escenario_Pista_Final");
 
-            GL.End();
-            GL.LineWidth(1f); // restaurar grosor original
-        }
+            //Crear acciones por acción, siguiendo modelo procesador
 
-        if (_ruta != null && _ruta.Count > 1) DibujarRuta(_ruta);
+            ProcesadorAccionesGlobal.Escena.AccionesActivas.Add(
+                UtilidadesAnimacion.CrearAccionRotacion(
+                "u3_gold",
+                tiempoInicio: 2f,
+                rotacionDeltaEuler: new Vector3(0f, 720f, 0f),
+                duracion: 10f
+            ));
+
+            // === Avanzar el auto (traslación) ===
+            ProcesadorAccionesGlobal.Escena.AccionesActivas.Add(
+                UtilidadesAnimacion.CrearAccionTraslacion(
+                    "auto",
+                    tiempoInicio: 0f,
+                    desplazamiento: new Vector3(0f, 0f, 11f),
+                    duracion: 5f
+                )
+            );
+
+            ProcesadorAccionesGlobal.Escena.AccionesActivas.Add(
+                UtilidadesAnimacion.CrearAccionTraslacion(
+                    "auto",
+                    tiempoInicio: 5f,
+                    desplazamiento: new Vector3(-0.5f, 0f, 2f),
+                    duracion: 0.833f
+                )
+            );
+
+            ProcesadorAccionesGlobal.Escena.AccionesActivas.Add(
+                UtilidadesAnimacion.CrearAccionRotacion(
+                    "auto",
+                    tiempoInicio: 5f,
+                    rotacionDeltaEuler: new Vector3(0f, 10f, 0f),
+                    duracion: 5f
+                )
+            );
+
+            ProcesadorAccionesGlobal.Escena.AccionesActivas.Add(
+                UtilidadesAnimacion.CrearAccionTraslacion(
+                    "auto",
+                    tiempoInicio: 5.833f,
+                    desplazamiento: new Vector3(-1f, 0f, 2f),
+                    duracion: 0.833f
+                )
+            );
+
+            ProcesadorAccionesGlobal.Escena.AccionesActivas.Add(
+                UtilidadesAnimacion.CrearAccionTraslacion(
+                    "auto",
+                    tiempoInicio: 6.666f,
+                    desplazamiento: new Vector3(-2f, 0f, 2f),
+                    duracion: 0.833f
+                )
+            );
+
+            ProcesadorAccionesGlobal.Escena.AccionesActivas.Add(
+                UtilidadesAnimacion.CrearAccionTraslacion(
+                    "auto",
+                    tiempoInicio: 7.499f,
+                    desplazamiento: new Vector3(-2f, 0f, 1.5f),
+                    duracion: 0.833f
+                )
+            );
+
+            ProcesadorAccionesGlobal.Escena.AccionesActivas.Add(
+                UtilidadesAnimacion.CrearAccionTraslacion(
+                    "auto",
+                    tiempoInicio: 8.332f,
+                    desplazamiento: new Vector3(-2.5f, 0f, 0.5f),
+                    duracion: 0.833f
+                )
+            );
+
+            ProcesadorAccionesGlobal.Escena.AccionesActivas.Add(
+                UtilidadesAnimacion.CrearAccionTraslacion(
+                    "auto",
+                    tiempoInicio: 9.165f,
+                    desplazamiento: new Vector3(-2f, 0f, 0f),
+                    duracion: 0.833f
+                )
+            );
+            
+            //vuelta U
+            ProcesadorAccionesGlobal.Escena.AccionesActivas.Add(
+                UtilidadesAnimacion.CrearAccionRotacion(
+                    "auto",
+                    tiempoInicio: 9.998f,
+                    rotacionDeltaEuler: new Vector3(0f, -0.5f, 0f),
+                    duracion: 3f
+                )
+            );
+
+            ProcesadorAccionesGlobal.Escena.AccionesActivas.Add(
+                UtilidadesAnimacion.CrearAccionTraslacion(
+                    "auto",
+                    tiempoInicio: 9.998f,
+                    desplazamiento: new Vector3(-2f, 0f, -0.5f),
+                    duracion: 0.833f
+                )
+            );
+
+
+            ProcesadorAccionesGlobal.Escena.AccionesActivas.Add(
+                UtilidadesAnimacion.CrearAccionTraslacion(
+                    "auto",
+                    tiempoInicio: 10.831f,
+                    desplazamiento: new Vector3(-2f, 0f, -1.5f),
+                    duracion: 0.833f
+                )
+            );
+
+            ProcesadorAccionesGlobal.Escena.AccionesActivas.Add(
+                UtilidadesAnimacion.CrearAccionTraslacion(
+                    "auto",
+                    tiempoInicio: 11.664f, 
+                    desplazamiento: new Vector3(-0.5f, 0f, -2f),
+                    duracion: 0.833f
+                )
+            );
+            
+            ProcesadorAccionesGlobal.Escena.AccionesActivas.Add(
+                UtilidadesAnimacion.CrearAccionTraslacion(
+                    "auto",
+                    tiempoInicio: 12.497f, 
+                    desplazamiento: new Vector3(-0.5f, 0f, -6f),
+                    duracion: 3f
+                )
+            );
+
+            ProcesadorAccionesGlobal.Escena.AccionesActivas.Add(
+                UtilidadesAnimacion.CrearAccionRotacion(
+                    "auto",
+                    tiempoInicio: 12.497f,
+                    rotacionDeltaEuler: new Vector3(0f, -0.05f, 0f),
+                    duracion: 0.5f
+                )
+            );
+
+            ProcesadorAccionesGlobal.Escena.AccionesActivas.Add(
+                UtilidadesAnimacion.CrearAccionTraslacion(
+                    "auto",
+                    tiempoInicio: 15.497f, 
+                    desplazamiento: new Vector3(0.3f, 0f, -9f),
+                    duracion: 5f
+                )
+            );
+
+            //GestorAnimaciones.GuardarLibreto("Libreto", ProcesadorAccionesGlobal.Escena.AccionesActivas);*/

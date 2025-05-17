@@ -8,7 +8,7 @@ namespace OpenTKCubo3D
         [JsonIgnore]
         public bool MostrarEjes { get; set; } = true; 
 
-        public Transformaciones Transform { get; } = new Transformaciones();
+        public Transformaciones Transform { get; set; } = new Transformaciones();
         [JsonIgnore]
         public Vector3 centroDeMasa { get; set; }
         [JsonPropertyName("centroDeMasa")]

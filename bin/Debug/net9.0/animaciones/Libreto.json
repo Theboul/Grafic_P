@@ -1,0 +1,676 @@
+{
+  "Acciones": [
+    {
+      "NombreObjeto": "u3_gold",
+      "TiempoInicio": 2,
+      "Keyframes": [
+        {
+          "Tiempo": 0,
+          "posicion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "rotacion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "escala": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        },
+        {
+          "Tiempo": 10,
+          "posicion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "rotacion": {
+            "X": -3.1415927,
+            "Y": -0.57528234,
+            "Z": -3.1415927
+          },
+          "escala": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        }
+      ]
+    },
+    {
+      "NombreObjeto": "auto",
+      "TiempoInicio": 0,
+      "Keyframes": [
+        {
+          "Tiempo": 0,
+          "posicion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "rotacion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "escala": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        },
+        {
+          "Tiempo": 5,
+          "posicion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 11
+          },
+          "rotacion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "escala": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        }
+      ]
+    },
+    {
+      "NombreObjeto": "auto",
+      "TiempoInicio": 5,
+      "Keyframes": [
+        {
+          "Tiempo": 0,
+          "posicion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "rotacion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "escala": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        },
+        {
+          "Tiempo": 0.833,
+          "posicion": {
+            "X": -0.5,
+            "Y": 0,
+            "Z": 2
+          },
+          "rotacion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "escala": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        }
+      ]
+    },
+    {
+      "NombreObjeto": "auto",
+      "TiempoInicio": 5,
+      "Keyframes": [
+        {
+          "Tiempo": 0,
+          "posicion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "rotacion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "escala": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        },
+        {
+          "Tiempo": 5,
+          "posicion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "rotacion": {
+            "X": 3.1415927,
+            "Y": -0.5752221,
+            "Z": 3.1415927
+          },
+          "escala": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        }
+      ]
+    },
+    {
+      "NombreObjeto": "auto",
+      "TiempoInicio": 5.833,
+      "Keyframes": [
+        {
+          "Tiempo": 0,
+          "posicion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "rotacion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "escala": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        },
+        {
+          "Tiempo": 0.833,
+          "posicion": {
+            "X": -1,
+            "Y": 0,
+            "Z": 2
+          },
+          "rotacion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "escala": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        }
+      ]
+    },
+    {
+      "NombreObjeto": "auto",
+      "TiempoInicio": 6.666,
+      "Keyframes": [
+        {
+          "Tiempo": 0,
+          "posicion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "rotacion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "escala": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        },
+        {
+          "Tiempo": 0.833,
+          "posicion": {
+            "X": -2,
+            "Y": 0,
+            "Z": 2
+          },
+          "rotacion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "escala": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        }
+      ]
+    },
+    {
+      "NombreObjeto": "auto",
+      "TiempoInicio": 7.499,
+      "Keyframes": [
+        {
+          "Tiempo": 0,
+          "posicion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "rotacion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "escala": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        },
+        {
+          "Tiempo": 0.833,
+          "posicion": {
+            "X": -2,
+            "Y": 0,
+            "Z": 1.5
+          },
+          "rotacion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "escala": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        }
+      ]
+    },
+    {
+      "NombreObjeto": "auto",
+      "TiempoInicio": 8.332,
+      "Keyframes": [
+        {
+          "Tiempo": 0,
+          "posicion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "rotacion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "escala": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        },
+        {
+          "Tiempo": 0.833,
+          "posicion": {
+            "X": -2.5,
+            "Y": 0,
+            "Z": 0.5
+          },
+          "rotacion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "escala": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        }
+      ]
+    },
+    {
+      "NombreObjeto": "auto",
+      "TiempoInicio": 9.165,
+      "Keyframes": [
+        {
+          "Tiempo": 0,
+          "posicion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "rotacion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "escala": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        },
+        {
+          "Tiempo": 0.833,
+          "posicion": {
+            "X": -2,
+            "Y": 0,
+            "Z": 0
+          },
+          "rotacion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "escala": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        }
+      ]
+    },
+    {
+      "NombreObjeto": "auto",
+      "TiempoInicio": 9.998,
+      "Keyframes": [
+        {
+          "Tiempo": 0,
+          "posicion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "rotacion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "escala": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        },
+        {
+          "Tiempo": 3,
+          "posicion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "rotacion": {
+            "X": 0,
+            "Y": -0.5,
+            "Z": 0
+          },
+          "escala": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        }
+      ]
+    },
+    {
+      "NombreObjeto": "auto",
+      "TiempoInicio": 9.998,
+      "Keyframes": [
+        {
+          "Tiempo": 0,
+          "posicion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "rotacion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "escala": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        },
+        {
+          "Tiempo": 0.833,
+          "posicion": {
+            "X": -2,
+            "Y": 0,
+            "Z": -0.5
+          },
+          "rotacion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "escala": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        }
+      ]
+    },
+    {
+      "NombreObjeto": "auto",
+      "TiempoInicio": 10.831,
+      "Keyframes": [
+        {
+          "Tiempo": 0,
+          "posicion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "rotacion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "escala": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        },
+        {
+          "Tiempo": 0.833,
+          "posicion": {
+            "X": -2,
+            "Y": 0,
+            "Z": -1.5
+          },
+          "rotacion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "escala": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        }
+      ]
+    },
+    {
+      "NombreObjeto": "auto",
+      "TiempoInicio": 11.664,
+      "Keyframes": [
+        {
+          "Tiempo": 0,
+          "posicion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "rotacion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "escala": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        },
+        {
+          "Tiempo": 0.833,
+          "posicion": {
+            "X": -0.5,
+            "Y": 0,
+            "Z": -2
+          },
+          "rotacion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "escala": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        }
+      ]
+    },
+    {
+      "NombreObjeto": "auto",
+      "TiempoInicio": 12.497,
+      "Keyframes": [
+        {
+          "Tiempo": 0,
+          "posicion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "rotacion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "escala": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        },
+        {
+          "Tiempo": 3,
+          "posicion": {
+            "X": -0.5,
+            "Y": 0,
+            "Z": -6
+          },
+          "rotacion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "escala": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        }
+      ]
+    },
+    {
+      "NombreObjeto": "auto",
+      "TiempoInicio": 12.497,
+      "Keyframes": [
+        {
+          "Tiempo": 0,
+          "posicion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "rotacion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "escala": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        },
+        {
+          "Tiempo": 0.5,
+          "posicion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "rotacion": {
+            "X": 0,
+            "Y": -0.05,
+            "Z": 0
+          },
+          "escala": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        }
+      ]
+    },
+    {
+      "NombreObjeto": "auto",
+      "TiempoInicio": 15.497,
+      "Keyframes": [
+        {
+          "Tiempo": 0,
+          "posicion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "rotacion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "escala": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        },
+        {
+          "Tiempo": 5,
+          "posicion": {
+            "X": 0.3,
+            "Y": 0,
+            "Z": -9
+          },
+          "rotacion": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "escala": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        }
+      ]
+    }
+  ]
+}

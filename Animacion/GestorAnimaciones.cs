@@ -1,49 +1,67 @@
-
 namespace OpenTKCubo3D
 {
     public static class GestorAnimaciones
     {
-        private static readonly List<AnimacionObjeto> _animaciones = new();
-
-        public static void Agregar(AnimacionObjeto animacion) => _animaciones.Add(animacion);
-
-        public static void ActualizarTodo(float deltaTime)
+        public static void GuardarLibreto(string nombreArchivo, List<AccionIndividual> acciones)
         {
-            foreach (var anim in _animaciones)
-                anim.Actualizar(deltaTime);
+            var libreto = new ArchivoLibreto
+            {
+                Acciones = acciones.Select(a => new AccionSerializada
+                {
+                    NombreObjeto = a.NombreObjeto,
+                    TiempoInicio = a.TiempoInicio,
+                    Keyframes = a.Libreto.Keyframes
+                }).ToList()
+            };
+
+            Utilidades.Guardar(libreto, "animaciones", nombreArchivo);
+
+            Console.WriteLine($"[Libreto guardado en animaciones/{nombreArchivo}.json]");
         }
 
-        public static void Limpiar() => _animaciones.Clear();
-
-        public static void CargarTodasDesdeCarpeta()
+        public static void CargarLibreto(string nombreArchivo)
         {
-            Limpiar();
+            var libreto = Utilidades.Cargar<ArchivoLibreto>("animaciones", nombreArchivo);
 
-            string carpeta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "animaciones");
-            if (!Directory.Exists(carpeta))
+            foreach (var accionSerializada in libreto.Acciones)
             {
-                Console.WriteLine("No se encontró la carpeta de animaciones.");
-                return;
-            }
-
-            string[] archivos = Directory.GetFiles(carpeta, "*.json");
-
-            foreach (var archivo in archivos)
-            {
-                string nombreArchivo = Path.GetFileNameWithoutExtension(archivo);
-                if (!GestorEscenarios.EscenarioActual.Objetos.ContainsKey(nombreArchivo))
+                if (!GestorEscenarios.EscenarioActual.Objetos.TryGetValue(accionSerializada.NombreObjeto, out var objeto))
                 {
-                    Console.WriteLine($"[Animación ignorada] No existe un objeto con el nombre '{nombreArchivo}' en el escenario.");
+                    Console.WriteLine($"[Animación ignorada] No existe el objeto '{accionSerializada.NombreObjeto}' en el escenario.");
                     continue;
                 }
 
-                var libreto = Utilidades.Cargar<LibretoAnimacion>("animaciones", nombreArchivo);
-                var objeto = GestorEscenarios.EscenarioActual.GetObjeto(nombreArchivo);
-                var animacion = new AnimacionObjeto(objeto, libreto);
-                Agregar(animacion);
+                var accion = new AccionIndividual
+                {
+                    NombreObjeto = accionSerializada.NombreObjeto,
+                    TiempoInicio = accionSerializada.TiempoInicio,
+                    EstadoInicial = new EstadoTransformacionInicial
+                    {
+                        Posicion = objeto.Transform.Position,
+                        Rotacion = objeto.Transform.Rotation,
+                        Escala = objeto.Transform.Scale
+                    },
+                    Libreto = new LibretoKeyframes { Keyframes = accionSerializada.Keyframes }
+                };
 
-                Console.WriteLine($"[Animación cargada] '{nombreArchivo}' aplicada al objeto.");
+                ProcesadorAccionesGlobal.Escena.AccionesActivas.Add(accion);
             }
+
+            Console.WriteLine($"[Libreto cargado desde animaciones/{nombreArchivo}.json]");
+        }
+
+
+
+        public class ArchivoLibreto
+        {
+            public List<AccionSerializada> Acciones { get; set; } = new();
+        }
+
+        public class AccionSerializada
+        {
+            public string NombreObjeto { get; set; } = string.Empty;
+            public float TiempoInicio { get; set; }
+            public List<FotogramaTransformacion> Keyframes { get; set; } = new();
         }
     }
 }
